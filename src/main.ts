@@ -3,8 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './assets/style/normalize.less'
+import { addGlobalComponents } from '@/components'
 
-createApp(App)
+const app = createApp(App)
+app
   .use(store)
   .use(router)
   .mount('#app')
+
+addGlobalComponents(app)

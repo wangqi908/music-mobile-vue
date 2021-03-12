@@ -8,8 +8,8 @@
 
 <script lang="ts">
 import { defineComponent, toRaw, reactive, toRefs } from 'vue'
-import { Tab } from '@/components'
-import { Recommendation, Hot, Search } from './components'
+import { Tab, Recommendation, Hot, Search } from './components'
+
 export default defineComponent({
   name: 'Home',
   components: {

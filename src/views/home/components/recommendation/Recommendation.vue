@@ -18,22 +18,20 @@
       </template>
     </Suspense> -->
 
-    <Test>
+    <MySuspense>
       <PlayList />
-    </Test>
-    <Test>
+    </MySuspense>
+    <MySuspense>
       <SongList />
-    </Test>
+    </MySuspense>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { PlayList, SongList } from './components'
-import Test from '@/components/Test.vue'
 export default defineComponent({
   components: {
-    Test,
     PlayList,
     SongList
   },

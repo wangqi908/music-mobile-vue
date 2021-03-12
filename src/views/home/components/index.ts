@@ -1,4 +1,5 @@
 import { defineAsyncComponent } from 'vue'
+export { default as Tab } from './Tab.vue'
 export const Recommendation = defineAsyncComponent(() =>
   import(
     /* webpackChunkName: "recommendation" */ './recommendation/Recommendation.vue'
