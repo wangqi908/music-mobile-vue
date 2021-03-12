@@ -10,5 +10,12 @@ module.exports = {
       warnings: false,
       errors: true
     }
+  },
+  css: {
+    loaderOptions: {
+      less: {
+        additionalData: '@import "~@/assets/style/variables.less";'
+      }
+    }
   }
 }
