@@ -1,15 +1,30 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
+    component: () =>
+      import(/* webpackChunkName: "home" */ '../views/home/Home.vue')
+  },
+  {
+    path: '/playlist/:id',
+    name: 'PlayList',
+    component: () =>
+      import(
+        /* webpackChunkName: "playlist" */ '../views/play-list/PlayList.vue'
+      )
+  },
+  {
+    path: '/song/:id',
+    name: 'Song',
+    component: () =>
+      import(/* webpackChunkName: "song" */ '../views/song/Song.vue')
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes
 })
 
