@@ -4,15 +4,17 @@
       <slot></slot>
     </template>
     <template #fallback>
-      <div class="loading">loading</div>
+      <Loading />
     </template>
   </Suspense>
 </template>
 
 <script lang="ts">
 import { defineComponent, onErrorCaptured } from 'vue'
+import Loading from './Loading.vue'
 
 export default defineComponent({
+  components: { Loading },
   setup () {
     onErrorCaptured(e => {
       console.log(e)
@@ -22,4 +24,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less"></style>

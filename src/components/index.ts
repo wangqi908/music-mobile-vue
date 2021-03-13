@@ -1,11 +1,14 @@
 import { Component, App } from 'vue'
 import MySuspense from './MySuspense.vue'
+import Loading from './Loading.vue'
 
 interface Components {
   MySuspense: Component;
+  Loading: Component;
 }
 export const components: Components = {
-  MySuspense
+  MySuspense,
+  Loading
 }
 
 /**

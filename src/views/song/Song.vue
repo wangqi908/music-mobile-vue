@@ -1,21 +1,30 @@
 <template>
-  <div>
-    song
+  <div class="song">
+    <div v-if="!loading">
+      {{ name }}
+    </div>
+    <Loading v-else />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useAsyncState } from './hooks/useAsyncState'
 
 export default defineComponent({
   setup () {
-    const route = useRoute()
-    const { id } = route.params
-    console.log(id, typeof id)
-    return {}
+    const { name, loading } = useAsyncState()
+
+    return {
+      name,
+      loading
+    }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.song {
+  height: 100%;
+}
+</style>

@@ -1,19 +1,23 @@
 <template>
   <div>
-    PlayList
+    <div v-if="!loading">
+      {{ name }}
+    </div>
+    <Loading v-else />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useAsyncState } from './hooks/useAsyncState'
 
 export default defineComponent({
   setup () {
-    const route = useRoute()
-    const { id } = route.params
-    console.log(id, typeof id)
-    return {}
+    const { name, loading } = useAsyncState()
+    return {
+      name,
+      loading
+    }
   }
 })
 </script>

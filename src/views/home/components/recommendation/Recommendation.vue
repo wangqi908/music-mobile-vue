@@ -1,26 +1,9 @@
 <template>
   <div>
-    <!-- <Suspense>
-      <template #default>
-        <PlayList />
-      </template>
-      <template #fallback>
-        <div>正在拼了命的加载…</div>
-      </template>
-    </Suspense>
-
-    <Suspense>
-      <template #default>
-        <SongList />
-      </template>
-      <template #fallback>
-        <div>正在拼了命的加载…</div>
-      </template>
-    </Suspense> -->
-
     <MySuspense>
       <PlayList />
     </MySuspense>
+    <hr />
     <MySuspense>
       <SongList />
     </MySuspense>
