@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './assets/style/normalize.less'
+import './assets/iconfont/iconfont.css'
 import { addGlobalComponents } from '@/components'
 
 const app = createApp(App)

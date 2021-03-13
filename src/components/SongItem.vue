@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="button center">
-      X
+      <span class="iconfont icon-icon-11"></span>
     </div>
   </div>
 </template>
