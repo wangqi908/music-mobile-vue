@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <div v-if="!loading">
-      {{ name }}
-    </div>
-    <Loading v-else />
+  <div v-if="!loading">
+    {{ name }}
   </div>
+  <Loading v-else />
 </template>
 
 <script lang="ts">

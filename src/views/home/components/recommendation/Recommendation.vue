@@ -1,9 +1,8 @@
 <template>
   <div>
-    <MySuspense>
+    <!-- <MySuspense>
       <PlayList />
-    </MySuspense>
-    <hr />
+    </MySuspense> -->
     <MySuspense>
       <SongList />
     </MySuspense>
@@ -15,6 +14,7 @@ import { defineComponent } from 'vue'
 import { PlayList, SongList } from './components'
 export default defineComponent({
   components: {
+    // eslint-disable-next-line vue/no-unused-components
     PlayList,
     SongList
   },

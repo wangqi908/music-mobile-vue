@@ -1,26 +1,21 @@
 <template>
-  <div v-if="!loading">
-    <p v-for="item in list" :key="item.id" @click="checkSong(item.id)">
-      {{ item.name }}
-    </p>
+  <div v-if="!loading" class="song-list">
+    <SongItem :info="item" v-for="item in list" :key="item.id" />
   </div>
   <Loading v-else />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useRouter } from 'vue-router'
 import { useAsyncState } from './hooks/useAsyncState'
+import { SongItem } from '@/components'
 
 export default defineComponent({
+  components: { SongItem },
   setup () {
-    const router = useRouter()
-    const { list, loading } = useAsyncState(30)
-    function checkSong (id: number) {
-      router.push({ params: { id }, name: 'Song' })
-    }
+    const { list, loading } = useAsyncState(10)
+
     return {
-      checkSong,
       loading,
       list
     }
@@ -28,4 +23,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.song-list {
+  border: 1px solid #000;
+}
+</style>

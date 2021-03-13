@@ -2,6 +2,8 @@ import { Component, App } from 'vue'
 import MySuspense from './MySuspense.vue'
 import Loading from './Loading.vue'
 
+export { default as SongItem } from './SongItem.vue'
+
 interface Components {
   MySuspense: Component;
   Loading: Component;
