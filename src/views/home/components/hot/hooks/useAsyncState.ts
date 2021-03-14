@@ -10,6 +10,7 @@ interface Item {
 export function useAsyncState (id = 3778678) {
   const state = reactive({
     list: null,
+    updateTime: '',
     loading: false
   })
 
@@ -19,7 +20,7 @@ export function useAsyncState (id = 3778678) {
       const res = await playlistDetailReq({ id })
 
       const playlist = res.data.playlist
-      const trackUpdateTime = playlist.trackUpdateTime
+      const updateTime = playlist.updateTime
       const info = playlist.tracks.map((item: Item, index: number) => {
         const artistNames = item.ar.map(artist => artist.name)
         const artistName = artistNames.join('/')
@@ -34,13 +35,13 @@ export function useAsyncState (id = 3778678) {
           artistName,
           id,
           picUrl,
-          name,
-          trackUpdateTime
+          name
         }
       })
       state.list = info
 
       state.loading = false
+      state.updateTime = updateTime
     } catch (e) {
       state.loading = false
     }
