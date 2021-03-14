@@ -13,7 +13,7 @@ import { SongItem } from '@/components'
 export default defineComponent({
   components: { SongItem },
   setup () {
-    const { list, loading } = useAsyncState(10)
+    const { list, loading } = useAsyncState(30)
 
     return {
       loading,
@@ -23,8 +23,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less">
-.song-list {
-  border: 1px solid #000;
-}
-</style>
+<style scoped lang="less"></style>

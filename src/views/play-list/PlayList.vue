@@ -1,8 +1,8 @@
 <template>
-  <div v-if="!loading">
+  <div v-if="!loading" class="play-list">
     {{ name }}
   </div>
-  <Loading v-else />
+  <Loading v-else isFullScreen />
 </template>
 
 <script lang="ts">
@@ -20,4 +20,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.play-list {
+}
+</style>

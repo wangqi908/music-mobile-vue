@@ -5,6 +5,7 @@ import store from './store'
 import './assets/style/normalize.less'
 import './assets/iconfont/iconfont.css'
 import { addGlobalComponents } from '@/components'
+import { addGlobalFilters } from '@/filters'
 
 const app = createApp(App)
 app
@@ -13,3 +14,4 @@ app
   .mount('#app')
 
 addGlobalComponents(app)
+addGlobalFilters(app)

@@ -4,7 +4,7 @@
       <slot></slot>
     </template>
     <template #fallback>
-      <Loading />
+      <Loading :isFullScreen="isFullScreen" />
     </template>
   </Suspense>
 </template>
@@ -14,6 +14,12 @@ import { defineComponent, onErrorCaptured } from 'vue'
 import Loading from './Loading.vue'
 
 export default defineComponent({
+  props: {
+    isFullScreen: {
+      type: Boolean,
+      default: false
+    }
+  },
   components: { Loading },
   setup () {
     onErrorCaptured(e => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="loading-component-box">
+  <div class="loading-component-box" :class="{ full: isFullScreen }">
     <span></span>
     <span></span>
     <span></span>
@@ -8,12 +8,24 @@
   </div>
 </template>
 
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  props: {
+    isFullScreen: {
+      type: Boolean,
+      default: false
+    }
+  }
+})
+</script>
+
 <style lang="less">
 .loading-component-box {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   min-height: 40px;
   span {
     display: inline-block;
@@ -47,5 +59,8 @@
 
     background: lightblue;
   }
+}
+.full {
+  height: 100%;
 }
 </style>

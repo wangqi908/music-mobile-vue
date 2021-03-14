@@ -43,9 +43,22 @@ h5 {
   align-items: center;
 }
 
+
+img {
+  vertical-align: middle;
+}
+
 .ellipsis-text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   word-break: normal;
+}
+
+.ellipsis-text-line-2 {
+  overflow:hidden; 
+  text-overflow:ellipsis;
+  display:-webkit-box; 
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2; 
 }
