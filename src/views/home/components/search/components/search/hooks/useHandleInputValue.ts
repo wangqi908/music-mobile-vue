@@ -3,11 +3,9 @@ import { ref } from 'vue'
 export default (defaultValue = '') => {
   const inputValue = ref(defaultValue)
   const isInputtingZh = ref(false)
-  const isInputting = ref(false)
   function valueChange (event: Event) {
     const target = event.target as HTMLInputElement
     const value = target.value
-    isInputting.value = value !== ''
     if (isInputtingZh.value) return
     inputValue.value = value
   }
@@ -21,7 +19,6 @@ export default (defaultValue = '') => {
 
   return {
     inputValue,
-    isInputting,
     valueChange,
     handleCompositionStart,
     handleCompositionEnd

@@ -1,6 +1,5 @@
 <template>
   <div class="input-wrap">
-    <span class="iconfont icon-search search-icon"></span>
     <input
       type="text"
       :value="inputValue"
@@ -9,55 +8,29 @@
       @compositionend="handleCompositionEnd"
       class="input"
     />
-    <label class="holder" v-if="!isInputting">搜索歌曲、歌手、专辑</label>
-    <div class="clean" v-if="isInputting" @click="cleanValue">
-      <span class="iconfont icon-guanbi1"></span>
-    </div>
   </div>
 
   <p>{{ inputValue }}</p>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
-import { useStore } from 'vuex'
-import useSetInputValue from './useHandleInputValue'
-import { debounce } from '@/utils'
+import { defineComponent } from 'vue'
+import useHandleInputValue from './useHandleInputValue'
 
 export default defineComponent({
   setup () {
-    const store = useStore()
-
     const {
       inputValue,
-      isInputting,
       valueChange,
       handleCompositionStart,
       handleCompositionEnd
-    } = useSetInputValue()
-
-    function cleanValue () {
-      inputValue.value = ''
-      isInputting.value = false
-    }
-
-    function getInfo (value: string) {
-      if (value === '') return
-      console.log('发请求', value)
-    }
-
-    watch(inputValue, debounce(getInfo, 250))
-    watch(inputValue, value => {
-      store.commit('search/changeSearch', value)
-    })
+    } = useHandleInputValue()
 
     return {
-      isInputting,
       inputValue,
       valueChange,
       handleCompositionStart,
-      handleCompositionEnd,
-      cleanValue
+      handleCompositionEnd
     }
   }
 })

@@ -31,7 +31,7 @@ export const playlistDetailReq = (params: Params) =>
   req('/playlist/detail', params, 'POST')
 
 interface Search {
-  keywords: number | string;
+  keywords: string;
   limit?: number | string;
   offset?: number | string;
   type?: string;

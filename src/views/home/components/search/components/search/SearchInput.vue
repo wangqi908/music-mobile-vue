@@ -7,10 +7,10 @@
       @input="valueChange"
       @compositionstart="handleCompositionStart"
       @compositionend="handleCompositionEnd"
+      placeholder="搜索歌曲、歌手、专辑"
       class="input"
     />
-    <label class="holder" v-if="!isInputting">搜索歌曲、歌手、专辑</label>
-    <div class="clean" v-if="isInputting" @click="cleanValue">
+    <div class="clean" v-if="inputValue" @click="cleanValue">
       <span class="iconfont icon-guanbi1"></span>
     </div>
   </div>
@@ -27,7 +27,6 @@ export default defineComponent({
 
     const {
       inputValue,
-      isInputting,
       valueChange,
       handleCompositionStart,
       handleCompositionEnd
@@ -35,7 +34,6 @@ export default defineComponent({
 
     function cleanValue () {
       inputValue.value = ''
-      isInputting.value = false
     }
 
     watch(inputValue, value => {
@@ -43,7 +41,6 @@ export default defineComponent({
     })
 
     return {
-      isInputting,
       inputValue,
       valueChange,
       handleCompositionStart,
