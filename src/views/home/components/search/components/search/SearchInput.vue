@@ -14,15 +14,12 @@
       <span class="iconfont icon-guanbi1"></span>
     </div>
   </div>
-
-  <p>{{ inputValue }}</p>
 </template>
 
 <script lang="ts">
 import { defineComponent, watch } from 'vue'
 import { useStore } from 'vuex'
-import useSetInputValue from './useHandleInputValue'
-import { debounce } from '@/utils'
+import useSetInputValue from './hooks/useHandleInputValue'
 
 export default defineComponent({
   setup () {
@@ -41,12 +38,6 @@ export default defineComponent({
       isInputting.value = false
     }
 
-    function getInfo (value: string) {
-      if (value === '') return
-      console.log('发请求', value)
-    }
-
-    watch(inputValue, debounce(getInfo, 250))
     watch(inputValue, value => {
       store.commit('search/changeSearch', value)
     })

@@ -43,7 +43,7 @@ export const formatTime = (timestamp: number, type: TimeType = 'obj') => {
  */
 export const debounce = <T>(fn: T, wait = 300) => {
   let timer: number
-  return (event: Event) => {
+  return <U>(event: U) => {
     if (timer) clearTimeout(timer)
     timer = setTimeout(() => {
       if (typeof fn === 'function') {
@@ -52,3 +52,14 @@ export const debounce = <T>(fn: T, wait = 300) => {
     }, wait)
   }
 }
+// export const debounce = <T>(fn: T, wait = 300) => {
+//   let timer: number
+//   return (event: Event) => {
+//     if (timer) clearTimeout(timer)
+//     timer = setTimeout(() => {
+//       if (typeof fn === 'function') {
+//         fn(event)
+//       }
+//     }, wait)
+//   }
+// }

@@ -1,6 +1,9 @@
 <template>
   <div>
-    Search
+    <div class="search-box">
+      <SearchInput />
+    </div>
+    <Suggest />
   </div>
 </template>
 
@@ -24,12 +27,18 @@
       记录确认搜索的关键词,可删除
  */
 import { defineComponent } from 'vue'
-
+import { SearchInput, Suggest } from './components'
 export default defineComponent({
+  components: { SearchInput, Suggest },
   setup () {
     return {}
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.search-box {
+  padding: 15px 10px;
+  border-bottom: 1px solid #ccc;
+}
+</style>
