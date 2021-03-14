@@ -35,3 +35,20 @@ export const formatTime = (timestamp: number, type: TimeType = 'obj') => {
       }
   }
 }
+
+/**
+ * 防抖
+ * @param fn
+ * @param wait
+ */
+export const debounce = <T>(fn: T, wait = 300) => {
+  let timer: number
+  return (event: Event) => {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      if (typeof fn === 'function') {
+        fn(event)
+      }
+    }, wait)
+  }
+}

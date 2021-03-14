@@ -24,7 +24,7 @@ export default defineComponent({
 
   setup () {
     const state = reactive({
-      navId: 1
+      navId: 2
     })
     const componentList = toRaw([Recommendation, Hot, Search])
     function navIdChange (id: number) {
