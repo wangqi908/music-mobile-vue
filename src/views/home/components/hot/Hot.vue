@@ -2,7 +2,7 @@
   <div v-if="!loading" class="hot-song">
     <SongItem :info="item" v-for="item in list" :key="item.id" />
   </div>
-  <Loading v-else />
+  <Loading v-else isFullScreen />
 </template>
 
 <script lang="ts">

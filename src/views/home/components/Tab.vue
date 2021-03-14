@@ -51,10 +51,15 @@ export default defineComponent({
 <style scoped lang="less">
 .tab {
   display: flex;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  box-shadow: 0px 1px 0px rgb(233, 233, 233);
+  height: 40px;
 
   .item {
     flex: 1;
     text-align: center;
+    line-height: 40px;
     cursor: pointer;
     display: block;
     width: 30%;

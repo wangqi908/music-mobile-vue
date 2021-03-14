@@ -1,5 +1,5 @@
 <template>
-  <div class="tip">推荐歌单</div>
+  <div class="tip margin-top">推荐歌单</div>
   <MySuspense>
     <PlayList />
   </MySuspense>
@@ -24,6 +24,9 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
+.margin-top {
+  margin-top: 20px;
+}
 .tip {
   position: relative;
   padding-left: 9px;

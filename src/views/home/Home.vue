@@ -1,9 +1,12 @@
 <template>
-  <Tab @navIdChange="navIdChange" />
-
-  <keep-alive>
-    <component :is="componentList[navId]"></component>
-  </keep-alive>
+  <div class="nav-wrap">
+    <Tab @navIdChange="navIdChange" />
+  </div>
+  <div class="content">
+    <keep-alive>
+      <component :is="componentList[navId]"></component>
+    </keep-alive>
+  </div>
 </template>
 
 <script lang="ts">
@@ -37,4 +40,13 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.nav-wrap {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+.content {
+  padding-top: 40px;
+}
+</style>
