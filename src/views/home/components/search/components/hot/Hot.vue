@@ -24,6 +24,7 @@ import { useAsyncState } from './hooks/useAsyncState'
 
 export default defineComponent({
   setup () {
+    // todo 可以优化到vuex里防止重复调用
     const { loading, list } = useAsyncState()
 
     const store = useStore()
