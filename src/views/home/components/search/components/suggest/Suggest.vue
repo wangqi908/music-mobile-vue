@@ -1,8 +1,14 @@
 <template>
   <div v-if="searchValue">
-    <div class="tip">正在搜索"{{ searchValue }}"</div>
+    <div class="tip" @click="handleSearchValue(searchValue)">
+      正在搜索"{{ searchValue }}"
+    </div>
     <div v-if="!loading">
-      <p v-for="(item, index) in list" :key="item + index">
+      <p
+        v-for="(item, index) in list"
+        :key="item + index"
+        @click="handleSearchValue(item)"
+      >
         {{ item }}
       </p>
     </div>
@@ -26,13 +32,15 @@ export default defineComponent({
 
     const store = useStore()
     const searchValue = computed(() => store.state.search.searchValue)
+    const actionType = computed(() => store.state.search.actionType)
     async function getInfo (value: string) {
-      if (value === '') return
-
+      if (value === '' || actionType.value !== 'SUGGEST') {
+        state.list = []
+        return
+      }
       state.loading = true
       try {
         const { list } = await useAsyncState(value)
-        console.log(list)
         state.list = list
         state.loading = false
       } catch (error) {
@@ -40,9 +48,18 @@ export default defineComponent({
       }
     }
 
+    function handleSearchValue (value: string) {
+      store.commit('search/changeActionType', 'SEARCH')
+      store.commit('search/changeSearch', value)
+    }
+
     watch(searchValue, debounce(getInfo, 250))
 
-    return { searchValue, ...toRefs(state) }
+    return {
+      searchValue,
+      handleSearchValue,
+      ...toRefs(state)
+    }
   }
 })
 </script>

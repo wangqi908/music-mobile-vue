@@ -3,7 +3,8 @@
     <div class="search-box">
       <SearchInput />
     </div>
-    <Suggest />
+    <Suggest v-if="actionType === 'SUGGEST'" />
+    {{ actionType }}
   </div>
 </template>
 
@@ -26,12 +27,17 @@
     搜索记录列表:
       记录确认搜索的关键词,可删除
  */
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
 import { SearchInput, Suggest } from './components'
 export default defineComponent({
   components: { SearchInput, Suggest },
   setup () {
-    return {}
+    const store = useStore()
+    const actionType = computed(() => store.state.search.actionType)
+    return {
+      actionType
+    }
   }
 })
 </script>

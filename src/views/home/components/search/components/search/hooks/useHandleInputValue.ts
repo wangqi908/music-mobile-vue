@@ -1,5 +1,6 @@
 import { ref } from 'vue'
-// import { debounce } from '@/utils'
+import store from '@/store'
+
 export default (defaultValue = '') => {
   const inputValue = ref(defaultValue)
   const isInputtingZh = ref(false)
@@ -8,6 +9,7 @@ export default (defaultValue = '') => {
     const value = target.value
     if (isInputtingZh.value) return
     inputValue.value = value
+    store.commit('search/changeSearch', value)
   }
   function handleCompositionStart () {
     isInputtingZh.value = true
@@ -16,11 +18,19 @@ export default (defaultValue = '') => {
     isInputtingZh.value = false
     valueChange(event)
   }
+  function cleanValue () {
+    inputValue.value = ''
+    store.commit('search/changeSearch', '')
+  }
+  function handleFocus () {
+    store.commit('search/changeActionType', 'SUGGEST')
+  }
 
   return {
-    inputValue,
     valueChange,
+    handleFocus,
     handleCompositionStart,
-    handleCompositionEnd
+    handleCompositionEnd,
+    cleanValue
   }
 }

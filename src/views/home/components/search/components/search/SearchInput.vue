@@ -3,46 +3,41 @@
     <span class="iconfont icon-search search-icon"></span>
     <input
       type="text"
-      :value="inputValue"
+      :value="searchValue"
       @input="valueChange"
       @compositionstart="handleCompositionStart"
       @compositionend="handleCompositionEnd"
+      @focus="handleFocus"
       placeholder="搜索歌曲、歌手、专辑"
       class="input"
     />
-    <div class="clean" v-if="inputValue" @click="cleanValue">
+    <div class="clean" v-if="searchValue" @click="cleanValue">
       <span class="iconfont icon-guanbi1"></span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
 import useSetInputValue from './hooks/useHandleInputValue'
 
 export default defineComponent({
   setup () {
     const store = useStore()
-
+    const searchValue = computed(() => store.state.search.searchValue)
     const {
-      inputValue,
       valueChange,
+      handleFocus,
       handleCompositionStart,
-      handleCompositionEnd
+      handleCompositionEnd,
+      cleanValue
     } = useSetInputValue()
 
-    function cleanValue () {
-      inputValue.value = ''
-    }
-
-    watch(inputValue, value => {
-      store.commit('search/changeSearch', value)
-    })
-
     return {
-      inputValue,
+      searchValue,
       valueChange,
+      handleFocus,
       handleCompositionStart,
       handleCompositionEnd,
       cleanValue
