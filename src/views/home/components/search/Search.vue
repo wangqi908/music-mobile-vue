@@ -3,6 +3,7 @@
     <div class="search-box">
       <SearchInput />
     </div>
+    <Hot v-if="!searchValue" />
     <Suggest v-if="actionType === 'SUGGEST'" />
     <SongList v-if="actionType === 'SONG_LIST'" />
   </div>
@@ -29,13 +30,15 @@
  */
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
-import { SearchInput, Suggest, SongList } from './components'
+import { SearchInput, Suggest, SongList, Hot } from './components'
 export default defineComponent({
-  components: { SearchInput, Suggest, SongList },
+  components: { SearchInput, Suggest, SongList, Hot },
   setup () {
     const store = useStore()
     const actionType = computed(() => store.state.search.actionType)
+    const searchValue = computed(() => store.state.search.searchValue)
     return {
+      searchValue,
       actionType
     }
   }
