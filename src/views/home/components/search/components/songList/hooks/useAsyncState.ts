@@ -1,7 +1,9 @@
 import { searchReq } from '@/api'
 import { Song } from '../interface'
+import { setStorage } from '@/utils'
 
 export const getInfo = async (keywords: string, offset = 1, limit = 10) => {
+  setStorage('hot', keywords)
   const params = {
     keywords,
     limit,

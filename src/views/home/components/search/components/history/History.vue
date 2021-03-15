@@ -1,17 +1,15 @@
 <template>
   <div>
-    <input v-model="searchValue" />
-    <button @click="add">add</button>
-    <div>
-      <p v-for="item in list" :key="item.id">{{ item.value }}--{{ item.id }}</p>
+    <div v-for="item in list" :key="item.id">
+      {{ item.value }}--{{ item.id }}
+      <button @click="clear(item.id)">clear</button>
     </div>
-    <button @click="clear">clear</button>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { setStorage, getStorage, removeStorage } from '@/utils'
+import { getStorage, removeStorage } from '@/utils'
 
 export default defineComponent({
   setup () {
@@ -24,13 +22,8 @@ export default defineComponent({
       list.value = hotList || []
     }
 
-    function add () {
-      setStorage('hot', searchValue.value)
-      getValue()
-    }
-
-    function clear () {
-      removeStorage('hot')
+    function clear (id: number) {
+      removeStorage('hot', id)
       getValue()
     }
 
@@ -38,7 +31,6 @@ export default defineComponent({
       getValue()
     })
     return {
-      add,
       clear,
       list,
       searchValue

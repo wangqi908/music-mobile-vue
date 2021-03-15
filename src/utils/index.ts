@@ -72,3 +72,54 @@ export const onReachBottom = <T>(fn: T) => {
     }
   })
 }
+
+export const getStorage = (key: string) => {
+  const result = localStorage.getItem(key)
+  return result ? JSON.parse(result) : null
+}
+
+export const setStorage = <T>(key: string, value: T) => {
+  interface Item {
+    id: number;
+    value: T;
+  }
+
+  const result: Item[] = getStorage(key)
+
+  if (!result) {
+    const obj = {
+      value,
+      id: 0
+    }
+    localStorage.setItem(key, JSON.stringify([obj]))
+  } else {
+    const hasValue = result.some(
+      item => JSON.stringify(item.value) === JSON.stringify(value)
+    )
+    if (hasValue) return
+    const lastItem = result[result.length - 1]
+    const id = lastItem ? lastItem.id + 1 : 0
+    const obj = {
+      value,
+      id
+    }
+    const arr = [...result, obj]
+    localStorage.setItem(key, JSON.stringify(arr))
+  }
+}
+
+export const removeStorage = (key?: string, id?: number) => {
+  if (key) {
+    if (id === undefined) {
+      localStorage.removeItem(key)
+    } else {
+      const result = getStorage(key)
+      if (result) {
+        const newList = result.filter((item: { id: number }) => item.id !== id)
+        localStorage.setItem(key, JSON.stringify(newList))
+      }
+    }
+  } else {
+    localStorage.clear()
+  }
+}
