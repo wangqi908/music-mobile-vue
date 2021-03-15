@@ -1,92 +1,63 @@
 <template>
-  <div class="input-wrap">
-    <input
-      type="text"
-      :value="inputValue"
-      @input="valueChange"
-      @compositionstart="handleCompositionStart"
-      @compositionend="handleCompositionEnd"
-      class="input"
-    />
+  <div>
+    <input v-model="searchValue" />
+    <button @click="search">search</button>
+    <div class="box">
+      <div v-for="(item, index) in songList" :key="item.id">
+        <p>{{ index }}</p>
+        <p>{{ item.name }}</p>
+        <p>{{ item.artistName }}---{{ item.albumName }}</p>
+        <hr />
+      </div>
+      <div v-if="!hasMore">已经到底了</div>
+    </div>
+    <Loading v-if="loading" />
+    {{ loading }}
   </div>
-
-  <p>{{ inputValue }}</p>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import useHandleInputValue from './useHandleInputValue'
+import { defineComponent, reactive, toRefs } from 'vue'
+import { getInfo } from './useTest'
+import { State } from './interface'
+import { onReachBottom } from '@/utils'
 
 export default defineComponent({
   setup () {
-    const {
-      inputValue,
-      valueChange,
-      handleCompositionStart,
-      handleCompositionEnd
-    } = useHandleInputValue()
+    const state: State = reactive({
+      searchValue: '周杰伦 搁浅',
+      hasMore: true,
+      loading: false,
+      offset: 0,
+      songList: []
+    })
 
+    async function search () {
+      if (state.hasMore === false) return
+      state.loading = true
+      try {
+        const { list, songCount } = await getInfo(
+          state.searchValue,
+          state.offset
+        )
+        state.songList = [...state.songList, ...list]
+        state.loading = false
+        if (state.songList.length >= songCount) {
+          state.songList.length = songCount
+          state.hasMore = false
+        }
+        state.offset++
+      } catch (error) {
+        state.loading = false
+      }
+    }
+    onReachBottom(search)
     return {
-      inputValue,
-      valueChange,
-      handleCompositionStart,
-      handleCompositionEnd
+      search,
+      ...toRefs(state)
     }
   }
 })
 </script>
 
-<style scoped lang="less">
-.input-wrap {
-  position: relative;
-  width: 100%;
-  height: 30px;
-  padding: 0 30px;
-  box-sizing: border-box;
-  background: #ebecec;
-  border-radius: 30px;
-  .input {
-    box-sizing: border-box;
-    width: 100%;
-    height: 30px;
-    line-height: 18px;
-    background: rgba(0, 0, 0, 0);
-    font-size: 14px;
-    color: #333;
-    border-radius: 0;
-    border: 0;
-    outline: none;
-    border: none;
-  }
-  .holder {
-    position: absolute;
-    left: 34px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 14px;
-    color: #c9c9c9;
-    background: rgba(0, 0, 0, 0);
-    pointer-events: none;
-  }
-  .iconfont {
-    color: #c9c9c9;
-  }
-  .clean {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 30px;
-    height: 30px;
-    line-height: 28px;
-    text-align: center;
-  }
-  .search-icon {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    margin: 0 8px;
-    vertical-align: middle;
-  }
-}
-</style>
+<style scoped></style>

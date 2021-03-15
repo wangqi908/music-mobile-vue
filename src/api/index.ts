@@ -34,7 +34,8 @@ interface Search {
   keywords: string;
   limit?: number | string;
   offset?: number | string;
-  type?: string;
+  type?: number |string;
+  timestamp?: number;
 }
 /**
  *  搜索

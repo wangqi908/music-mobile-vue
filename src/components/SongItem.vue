@@ -8,10 +8,13 @@
     </div>
     <div class="content">
       <div class="song-name ellipsis-text">
-        {{ info.name }}
+        <span>{{ info.name }}</span>
       </div>
       <div class="artist-name ellipsis-text">
-        {{ info.artistName }}
+        <span>
+          {{ info.artistName }}
+        </span>
+        <span v-if="showAlbum"> - {{ info.albumName }}</span>
       </div>
     </div>
     <div class="button center">
@@ -26,7 +29,11 @@ import { useRouter } from 'vue-router'
 
 export default defineComponent({
   props: {
-    info: Object
+    info: Object,
+    showAlbum: {
+      type: Boolean,
+      default: false
+    }
   },
   setup (props) {
     const router = useRouter()

@@ -18,7 +18,6 @@ export function useAsyncState () {
       state.name = resData.songs[0].name
       state.loading = false
     } catch (e) {
-      console.error(e)
       state.loading = false
     }
   }

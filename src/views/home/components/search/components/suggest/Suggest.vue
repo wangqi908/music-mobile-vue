@@ -1,17 +1,19 @@
 <template>
-  <div v-if="searchValue">
+  <div v-if="searchValue" class="suggest-component">
     <div class="tip" @click="handleSearchValue(searchValue)">
       正在搜索"{{ searchValue }}"
     </div>
-    <div v-if="!loading">
-      <p
+    <ul v-if="!loading" class="suggest-box">
+      <li
         v-for="(item, index) in list"
         :key="item + index"
         @click="handleSearchValue(item)"
+        class="suggest-item"
       >
-        {{ item }}
-      </p>
-    </div>
+        <span class="iconfont icon-search"></span>
+        <span>{{ item }}</span>
+      </li>
+    </ul>
     <Loading v-else />
   </div>
 </template>
@@ -49,8 +51,12 @@ export default defineComponent({
     }
 
     function handleSearchValue (value: string) {
-      store.commit('search/changeActionType', 'SEARCH')
+      store.commit('search/changeActionType', 'SONG_LIST')
       store.commit('search/changeSearch', value)
+    }
+
+    if (searchValue.value !== '') {
+      getInfo(searchValue.value)
     }
 
     watch(searchValue, debounce(getInfo, 250))
@@ -64,4 +70,23 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.suggest-component {
+  font-size: 14px;
+  padding: 0 10px;
+}
+.tip {
+  color: #507daf;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.suggest-item {
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+  .icon-search {
+    color: #ccc;
+    margin-right: 10px;
+  }
+}
+</style>

@@ -1,4 +1,4 @@
-type actionType = '' | 'SEARCH' | 'SUGGEST'
+type actionType = '' | 'SONG_LIST' | 'SUGGEST'
 interface State {
   searchValue: string;
   actionType: actionType;
@@ -12,7 +12,6 @@ const mutations = {
     state.searchValue = value
   },
   changeActionType (state: State, value: actionType) {
-    console.log(value)
     state.actionType = value
   }
 }

@@ -2,13 +2,14 @@
   <div class="input-wrap">
     <span class="iconfont icon-search search-icon"></span>
     <input
-      type="text"
       :value="searchValue"
       @input="valueChange"
       @compositionstart="handleCompositionStart"
       @compositionend="handleCompositionEnd"
       @focus="handleFocus"
+      @keyup.enter="submit"
       placeholder="搜索歌曲、歌手、专辑"
+      type="text"
       class="input"
     />
     <div class="clean" v-if="searchValue" @click="cleanValue">
@@ -28,6 +29,7 @@ export default defineComponent({
     const searchValue = computed(() => store.state.search.searchValue)
     const {
       valueChange,
+      submit,
       handleFocus,
       handleCompositionStart,
       handleCompositionEnd,
@@ -37,6 +39,7 @@ export default defineComponent({
     return {
       searchValue,
       valueChange,
+      submit,
       handleFocus,
       handleCompositionStart,
       handleCompositionEnd,

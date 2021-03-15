@@ -8,10 +8,10 @@ import { addGlobalComponents } from '@/components'
 import { addGlobalFilters } from '@/filters'
 
 const app = createApp(App)
+
 app
   .use(store)
   .use(router)
   .mount('#app')
-
 addGlobalComponents(app)
 addGlobalFilters(app)

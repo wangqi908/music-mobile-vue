@@ -4,7 +4,7 @@
       <SearchInput />
     </div>
     <Suggest v-if="actionType === 'SUGGEST'" />
-    {{ actionType }}
+    <SongList v-if="actionType === 'SONG_LIST'" />
   </div>
 </template>
 
@@ -29,9 +29,9 @@
  */
 import { defineComponent, computed } from 'vue'
 import { useStore } from 'vuex'
-import { SearchInput, Suggest } from './components'
+import { SearchInput, Suggest, SongList } from './components'
 export default defineComponent({
-  components: { SearchInput, Suggest },
+  components: { SearchInput, Suggest, SongList },
   setup () {
     const store = useStore()
     const actionType = computed(() => store.state.search.actionType)

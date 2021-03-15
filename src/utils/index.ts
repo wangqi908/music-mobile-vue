@@ -52,14 +52,23 @@ export const debounce = <T>(fn: T, wait = 300) => {
     }, wait)
   }
 }
-// export const debounce = <T>(fn: T, wait = 300) => {
-//   let timer: number
-//   return (event: Event) => {
-//     if (timer) clearTimeout(timer)
-//     timer = setTimeout(() => {
-//       if (typeof fn === 'function') {
-//         fn(event)
-//       }
-//     }, wait)
-//   }
-// }
+
+/**
+ * 页面上拉触底事件的处理函数
+ * @param fn
+ */
+export const onReachBottom = <T>(fn: T) => {
+  document.addEventListener('scroll', () => {
+    const scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop
+    const windowHeight =
+      document.documentElement.clientHeight || document.body.clientHeight
+    const scrollHeight =
+      document.documentElement.scrollHeight || document.body.scrollHeight
+    if (scrollTop + windowHeight === scrollHeight) {
+      if (typeof fn === 'function') {
+        fn()
+      }
+    }
+  })
+}
