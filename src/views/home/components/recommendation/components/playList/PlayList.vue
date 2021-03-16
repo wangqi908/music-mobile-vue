@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading" class="play-list">
+  <div v-if="!loading" class="playList">
     <div
       v-for="item in list"
       :key="item.id"
@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.play-list {
+.playList {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

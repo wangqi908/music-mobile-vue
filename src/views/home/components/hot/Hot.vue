@@ -1,30 +1,33 @@
 <template>
-  <div v-if="!loading" class="hot-song">
+  <div class="hot-song">
     <div class="banner-wrap">
       <div class="hot-icon"></div>
-      <div class="hot-time">
+      <div class="hot-time" v-if="updateTime">
         更新日期：{{ $filters.formatTimeAll(updateTime) }}
       </div>
     </div>
-    <SongItem :info="item" v-for="item in list" :key="item.id" />
+    <SongList @getInfo="getInfo" />
   </div>
-  <Loading v-else isFullScreen />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { SongItem } from '@/components'
-import { useAsyncState } from './hooks/useAsyncState'
+import { defineComponent, reactive, toRefs } from 'vue'
+import { SongListInfo } from '@/interface/song'
+import SongList from '@/components/SongList/SongList.vue'
 
 export default defineComponent({
-  components: { SongItem },
+  components: { SongList },
   setup () {
-    const { list, loading, updateTime } = useAsyncState()
+    const state: SongListInfo = reactive({
+      updateTime: 0
+    })
 
+    function getInfo (songListInfo: SongListInfo) {
+      state.updateTime = songListInfo.updateTime
+    }
     return {
-      updateTime,
-      loading,
-      list
+      getInfo,
+      ...toRefs(state)
     }
   }
 })

@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'PlayList',
     component: () =>
       import(
-        /* webpackChunkName: "playlist" */ '../views/play-list/PlayList.vue'
+        /* webpackChunkName: "playlist" */ '../views/playList/PlayList.vue'
       )
   },
   {

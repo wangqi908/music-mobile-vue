@@ -19,4 +19,11 @@ export interface SongInfo {
   id: string;
   picUrl: string;
   name: string;
+  rank?: number;
+}
+
+export interface SongListInfo {
+  list?: SongInfo[];
+  updateTime?: number;
+  loading?: boolean;
 }
