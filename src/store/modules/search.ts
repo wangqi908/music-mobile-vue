@@ -1,23 +1,36 @@
-type actionType = '' | 'SONG_LIST' | 'SUGGEST'
-interface State {
-  searchValue: string;
-  actionType: actionType;
-}
-const state: State = {
+import { Module, ActionContext } from 'vuex'
+import { RootState, SearchState, SearchActionType } from '@/store/interface'
+import { searchModule } from '@/store/actionTypes'
+import { searchHotReq } from '@/api'
+
+const state: SearchState = {
   searchValue: '',
-  actionType: ''
+  actionType: '',
+  hotKeywords: []
 }
 const mutations = {
-  changeSearch (state: State, value: string) {
+  [searchModule.CHANGE_SEARCH] (state: SearchState, value: string) {
     state.searchValue = value
   },
-  changeActionType (state: State, value: actionType) {
+  [searchModule.CHANGE_ACTION_TYPE] (
+    state: SearchState,
+    value: SearchActionType
+  ) {
     state.actionType = value
+  }
+}
+const actions = {
+  async [searchModule.GET_HOT_KEYWORDS_ASYNC] ({
+    commit
+  }: ActionContext<SearchState, RootState>) {
+    const res = await searchHotReq()
+    console.log(res.data)
+    // commit([searchModule.])
   }
 }
 export default {
   namespaced: true,
   state,
   mutations,
-  actions: {}
-}
+  actions
+} as Module<SearchState, RootState>

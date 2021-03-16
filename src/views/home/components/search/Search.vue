@@ -3,7 +3,7 @@
     <div class="search-box">
       <SearchInput />
     </div>
-    <!-- <Hot v-if="!searchValue" /> -->
+    <Hot v-if="!searchValue" />
     <History v-if="!searchValue" />
     <Suggest v-if="actionType === 'SUGGEST'" />
     <SongList v-if="actionType === 'SONG_LIST'" />
@@ -30,15 +30,14 @@
       记录确认搜索的关键词,可删除
  */
 import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import { SearchInput, Suggest, SongList, Hot, History } from './components'
 export default defineComponent({
-  // eslint-disable-next-line vue/no-unused-components
   components: { SearchInput, Suggest, SongList, Hot, History },
   setup () {
     const store = useStore()
-    const actionType = computed(() => store.state.search.actionType)
-    const searchValue = computed(() => store.state.search.searchValue)
+    const actionType = computed(() => store.state.searchModule.actionType)
+    const searchValue = computed(() => store.state.searchModule.searchValue)
     return {
       searchValue,
       actionType

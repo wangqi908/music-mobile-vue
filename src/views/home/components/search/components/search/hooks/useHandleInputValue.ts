@@ -1,5 +1,6 @@
 import { ref } from 'vue'
-import store from '@/store'
+import { store } from '@/store'
+import { searchModule } from '@/store/actionTypes'
 
 export default () => {
   const isInputtingZh = ref(false)
@@ -7,7 +8,7 @@ export default () => {
     const target = event.target as HTMLInputElement
     const value = target.value
     if (isInputtingZh.value) return
-    store.commit('search/changeSearch', value)
+    store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, value)
   }
   function handleCompositionStart () {
     isInputtingZh.value = true
@@ -17,17 +18,23 @@ export default () => {
     valueChange(event)
   }
   function cleanValue () {
-    store.commit('search/changeSearch', '')
-    store.commit('search/changeActionType', '')
+    store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, '')
+    store.commit(searchModule.MODULE + searchModule.CHANGE_ACTION_TYPE, '')
   }
   function handleFocus () {
-    store.commit('search/changeActionType', 'SUGGEST')
+    store.commit(
+      searchModule.MODULE + searchModule.CHANGE_ACTION_TYPE,
+      'SUGGEST'
+    )
   }
   function submit (event: Event) {
     const target = event.target as HTMLInputElement
     const value = target.value
-    store.commit('search/changeSearch', value)
-    store.commit('search/changeActionType', 'SONG_LIST')
+    store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, value)
+    store.commit(
+      searchModule.MODULE + searchModule.CHANGE_ACTION_TYPE,
+      'SONG_LIST'
+    )
   }
 
   return {

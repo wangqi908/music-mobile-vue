@@ -12,7 +12,8 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
+import { searchModule } from '@/store/actionTypes'
 import { getStorage, removeStorage } from '@/utils'
 
 export default defineComponent({
@@ -31,8 +32,11 @@ export default defineComponent({
     }
 
     function search (value: string) {
-      store.commit('search/changeSearch', value)
-      store.commit('search/changeActionType', 'SONG_LIST')
+      store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, value)
+      store.commit(
+        searchModule.MODULE + searchModule.CHANGE_ACTION_TYPE,
+        'SONG_LIST'
+      )
     }
 
     onMounted(() => {

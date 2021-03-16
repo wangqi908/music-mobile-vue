@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, reactive, toRefs } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import { getInfo } from './hooks/useAsyncState'
 import { State } from './interface'
 import { SongItem } from '@/components'
@@ -27,7 +27,9 @@ export default defineComponent({
       songList: []
     })
     const store = useStore()
-    const searchValue = computed((): string => store.state.search.searchValue)
+    const searchValue = computed(
+      (): string => store.state.searchModule.searchValue
+    )
 
     async function search () {
       if (state.hasMore === false || state.loading === true) return

@@ -20,13 +20,13 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import useSetInputValue from './hooks/useHandleInputValue'
 
 export default defineComponent({
   setup () {
     const store = useStore()
-    const searchValue = computed(() => store.state.search.searchValue)
+    const searchValue = computed(() => store.state.searchModule.searchValue)
     const {
       valueChange,
       submit,

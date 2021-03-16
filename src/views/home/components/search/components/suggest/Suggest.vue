@@ -20,8 +20,9 @@
 
 <script lang="ts">
 import { defineComponent, computed, watch, reactive, toRefs } from 'vue'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 import { useAsyncState } from './hooks/useAsyncState'
+import { searchModule } from '@/store/actionTypes'
 import { State } from './hooks/interface'
 import { debounce } from '@/utils'
 
@@ -33,8 +34,8 @@ export default defineComponent({
     })
 
     const store = useStore()
-    const searchValue = computed(() => store.state.search.searchValue)
-    const actionType = computed(() => store.state.search.actionType)
+    const searchValue = computed(() => store.state.searchModule.searchValue)
+    const actionType = computed(() => store.state.searchModule.actionType)
     async function getInfo (value: string) {
       if (value === '' || actionType.value !== 'SUGGEST') {
         state.list = []
@@ -51,8 +52,11 @@ export default defineComponent({
     }
 
     function handleSearchValue (value: string) {
-      store.commit('search/changeActionType', 'SONG_LIST')
-      store.commit('search/changeSearch', value)
+      store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, value)
+      store.commit(
+        searchModule.MODULE + searchModule.CHANGE_ACTION_TYPE,
+        'SONG_LIST'
+      )
     }
 
     if (searchValue.value !== '') {
