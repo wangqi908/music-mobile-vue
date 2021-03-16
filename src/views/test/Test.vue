@@ -1,47 +1,21 @@
 <template>
   <div>
-    <input v-model="searchValue" />
-    <button @click="add">add</button>
-    <div>
-      <p v-for="item in list" :key="item.id">{{ item.value }}--{{ item.id }}</p>
-    </div>
-    <button @click="clear">clear</button>
+    {{ hotKeywords }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
-import { setStorage, getStorage, removeStorage } from '@/utils'
+import { computed, defineComponent } from 'vue'
+import { useStore } from '@/store'
+import { searchModule } from '@/store/actionTypes'
 
 export default defineComponent({
   setup () {
-    const searchValue = ref('')
-    const list = ref([])
-
-    function getValue () {
-      const hotList = getStorage('hot')
-      console.log(hotList)
-      list.value = hotList || []
-    }
-
-    function add () {
-      setStorage('hot', searchValue.value)
-      getValue()
-    }
-
-    function clear () {
-      removeStorage('hot')
-      getValue()
-    }
-
-    onMounted(() => {
-      getValue()
-    })
+    const store = useStore()
+    store.dispatch(searchModule.MODULE + searchModule.GET_HOT_KEYWORDS_ASYNC)
+    const hotKeywords = computed(() => store.state.searchModule.hotKeywords)
     return {
-      add,
-      clear,
-      list,
-      searchValue
+      hotKeywords
     }
   }
 })

@@ -1,12 +1,12 @@
 <template>
-  <div class="search-hot" v-if="!loading">
+  <div class="search-hot" v-if="!hotKeywords.loading">
     <h3 class="title">
       热门搜索
     </h3>
     <ul class="list">
       <li
         class="item"
-        v-for="(item, index) in list"
+        v-for="(item, index) in hotKeywords.list"
         :key="index"
         @click="search(item)"
       >
@@ -18,17 +18,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
 import { searchModule } from '@/store/actionTypes'
-import { useAsyncState } from './hooks/useAsyncState'
 
 export default defineComponent({
   setup () {
     // todo 可以优化到vuex里防止重复调用
-    const { loading, list } = useAsyncState()
 
     const store = useStore()
+
+    store.dispatch(searchModule.MODULE + searchModule.GET_HOT_KEYWORDS_ASYNC)
+    const hotKeywords = computed(() => store.state.searchModule.hotKeywords)
 
     function search (value: string) {
       store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, value)
@@ -38,7 +39,7 @@ export default defineComponent({
       )
     }
 
-    return { loading, list, search }
+    return { hotKeywords, search }
   }
 })
 </script>
