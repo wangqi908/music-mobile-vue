@@ -10,12 +10,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, reactive, toRefs } from 'vue'
+import {
+  defineComponent,
+  computed,
+  reactive,
+  toRefs,
+  onUnmounted,
+  onMounted
+} from 'vue'
 import { useStore } from '@/store'
 import { getInfo } from './hooks/useAsyncState'
 import { State } from './interface'
 import { SongItem } from '@/components'
-import { onReachBottom } from '@/utils'
 
 export default defineComponent({
   components: { SongItem },
@@ -32,7 +38,13 @@ export default defineComponent({
     )
 
     async function search () {
-      if (state.hasMore === false || state.loading === true) return
+      if (
+        state.hasMore === false ||
+        state.loading === true ||
+        searchValue.value === ''
+      ) {
+        return
+      }
       state.loading = true
       try {
         const { list, songCount } = await getInfo(
@@ -50,8 +62,29 @@ export default defineComponent({
         state.loading = false
       }
     }
-    search()
-    onReachBottom(search)
+
+    function onReachBottom () {
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop
+      const windowHeight =
+        document.documentElement.clientHeight || document.body.clientHeight
+      const scrollHeight =
+        document.documentElement.scrollHeight || document.body.scrollHeight
+      if (scrollTop + windowHeight === scrollHeight) {
+        search()
+      }
+    }
+
+    onMounted(() => {
+      search()
+      document.addEventListener('scroll', onReachBottom)
+    })
+
+    onUnmounted(() => {
+      // search = null
+      document.removeEventListener('scroll', onReachBottom)
+    })
+
     return {
       ...toRefs(state)
     }

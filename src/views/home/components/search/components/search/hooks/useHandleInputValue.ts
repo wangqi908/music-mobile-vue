@@ -7,7 +7,7 @@ export default () => {
   function valueChange (event: Event) {
     const target = event.target as HTMLInputElement
     const value = target.value
-    if (isInputtingZh.value) return
+    if (isInputtingZh.value || value === '') return
     store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, value)
   }
   function handleCompositionStart () {
@@ -30,6 +30,9 @@ export default () => {
   function submit (event: Event) {
     const target = event.target as HTMLInputElement
     const value = target.value
+    if (value === '') return
+    target.blur()
+
     store.commit(searchModule.MODULE + searchModule.CHANGE_SEARCH, value)
     store.commit(
       searchModule.MODULE + searchModule.CHANGE_ACTION_TYPE,

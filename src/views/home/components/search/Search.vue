@@ -3,6 +3,7 @@
     <div class="search-box">
       <SearchInput />
     </div>
+    {{ actionType }}
     <Hot v-if="!searchValue" />
     <History v-if="!searchValue" />
     <Suggest v-if="actionType === 'SUGGEST'" />
