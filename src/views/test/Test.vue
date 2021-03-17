@@ -1,192 +1,49 @@
 <template>
   <div>
-    {{ isOpen }}
-    {{ distance }}
-    <div class="popup" :style="styleObject" ref="popup">
-      <div
-        class="tab"
-        @mousedown="start"
-        @mousemove="move"
-        @mouseup="end"
-        @mouseleave="leave"
-        @touchstart="start"
-        @touchmove="move"
-        @touchend="end"
-        ref="tab"
-      >
-        <button>aa</button>
-      </div>
-      <div class="content">
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-      </div>
-    </div>
+    <Popup>
+      <template #tab>
+        <ul class="tab-box">
+          <li>a</li>
+          <li>b</li>
+          <li>c</li>
+        </ul>
+      </template>
+      <template #content>
+        <div class="content-box">
+          aaaa
+        </div>
+      </template>
+    </Popup>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  toRefs,
-  ref,
-  computed,
-  onMounted,
-  watch
-} from 'vue'
+import { defineComponent } from 'vue'
+import Popup from './Popup.vue'
 
 export default defineComponent({
+  components: { Popup },
   setup () {
-    const popup = ref<HTMLElement | null>(null)
-    const tab = ref<HTMLElement | null>(null)
-
-    const tabHeight = computed(() => {
-      return tab.value?.offsetHeight || 0
-    })
-    const popupHeight = computed(() => {
-      return popup.value?.offsetHeight || 0
-    })
-
-    const state = reactive({
-      isOpen: false,
-      isDragging: false,
-      toggleDistance: 50,
-      pageY: 0,
-      oldBottom: 0,
-      distance: 0,
-      tabHeight: 0,
-      style: {
-        bottom: 0,
-        opacity: 1,
-        transition: 'all 0.2s ease-in 0s'
-      }
-    })
-
-    onMounted(() => {
-      state.style.bottom = tabHeight.value
-
-      watch(tab, value => {
-        console.log(value)
-      })
-    })
-
-    const styleObject = computed(() => {
-      const { bottom, transition, opacity } = state.style
-      return {
-        opacity,
-        bottom: `${bottom}px`,
-        transition
-      }
-    })
-
-    function start (event: MouseEvent | TouchEvent) {
-      state.style.transition = 'all 0s ease-in 0s'
-
-      let pageY
-      if (event.type === 'mousedown') {
-        pageY = (event as MouseEvent).pageY
-      } else {
-        pageY = (event as TouchEvent).touches[0].pageY
-      }
-
-      state.isDragging = true
-      state.pageY = pageY
-      state.oldBottom = state.style.bottom
-    }
-    function move (event: MouseEvent | TouchEvent) {
-      if (!state.isDragging) return
-      let pageY
-      if (event.type === 'mousemove') {
-        pageY = (event as MouseEvent).pageY
-      } else {
-        pageY = (event as TouchEvent).touches[0].pageY
-      }
-      const oldBottom = state.oldBottom
-
-      const distance = state.pageY - pageY
-      const newBottom = oldBottom + distance
-
-      if (newBottom >= popupHeight.value) {
-        return
-      }
-      if (newBottom <= tabHeight.value) {
-        state.style.bottom = tabHeight.value
-        return
-      }
-      state.style.bottom = newBottom
-      state.distance = distance
-    }
-    function leave () {
-      state.isDragging = false
-    }
-    function end () {
-      state.isDragging = false
-
-      const { distance, isOpen, toggleDistance } = state
-
-      if (distance < toggleDistance && !isOpen) {
-        state.style.bottom = tabHeight.value
-        state.isOpen = false
-      }
-      if (distance >= toggleDistance && !isOpen) {
-        state.style.bottom = popupHeight.value
-        state.isOpen = true
-      }
-      if (distance >= -toggleDistance && isOpen) {
-        state.style.bottom = popupHeight.value
-        state.isOpen = true
-      }
-      if (distance < -toggleDistance && isOpen) {
-        state.style.bottom = tabHeight.value
-        state.isOpen = false
-      }
-      state.style.transition = 'all 0.2s ease-in 0s'
-    }
-
-    return {
-      ...toRefs(state),
-      popup,
-      tab,
-      styleObject,
-      start,
-      move,
-      end,
-      leave
-    }
+    return {}
   }
 })
 </script>
 
 <style scoped lang="less">
-.popup {
+.test {
   border: 1px solid #000;
-  position: fixed;
-  height: 80%;
-  transform: translateY(100%);
-  width: 100%;
-
-  background-color: rgb(220, 222, 228);
+}
+.tab-box {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  li {
+    text-align: center;
+    border: 1px solid #000;
+    flex: 1;
+  }
 }
-.tab {
-  border-bottom: 1px solid #ccc;
-  padding: 18px 0;
-}
-li {
+.content-box {
   border: 1px solid #000;
-  margin: 10px;
-}
-.content {
-  flex: 1;
-  overflow: auto;
+  height: 100%;
 }
 </style>

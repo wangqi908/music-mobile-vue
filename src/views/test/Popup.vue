@@ -1,36 +1,22 @@
 <template>
-  <div class="test">
-    {{ isOpen }}
-    <!-- {{ distance }} -->
-
-    {{ styleObject }}
-    {{ opacityObject }}
-    <div class="popup" :style="styleObject" ref="popup">
-      <div
-        class="tab"
-        @mousedown="start"
-        @mousemove="move"
-        @mouseup="end"
-        @mouseleave="leave"
-        @touchstart="start"
-        @touchmove="move"
-        @touchend="end"
-        ref="tab"
-      >
-        <div :style="opacityObject" class="tab-item">aaa</div>
+  <div class="popup" :style="styleObject" ref="popup">
+    <div
+      class="tab"
+      @mousedown="start"
+      @mousemove="move"
+      @mouseup="end"
+      @mouseleave="leave"
+      @touchstart="start"
+      @touchmove="move"
+      @touchend="end"
+      ref="tab"
+    >
+      <div :style="opacityObject" class="tab-item">
+        <slot name="tab"></slot>
       </div>
-      <div class="content">
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-        <li>aaaaaaaa</li>
-      </div>
+    </div>
+    <div class="content">
+      <slot name="content"></slot>
     </div>
   </div>
 </template>
@@ -47,7 +33,19 @@ import {
 } from 'vue'
 
 export default defineComponent({
-  setup () {
+  props: {
+    height: {
+      // 高度 百分比
+      type: Number,
+      default: 80
+    },
+    toggleDistance: {
+      // 自动展开收缩高度
+      type: Number,
+      default: 40
+    }
+  },
+  setup (props) {
     function toFixedNum (num: number, lang = 0) {
       return Number(num.toFixed(lang))
     }
@@ -64,12 +62,12 @@ export default defineComponent({
     const state = reactive({
       isOpen: false,
       isDragging: false,
-      toggleDistance: 50,
       pageY: 0,
       oldBottom: 0,
       distance: 0,
       style: {
         bottom: 0,
+        height: props.height,
         backgroundOpacity,
         transition: 'all 0.2s ease-in 0s'
       }
@@ -81,7 +79,9 @@ export default defineComponent({
       watch(
         () => state.style.bottom,
         val => {
-          const { distance, toggleDistance, isOpen } = state
+          const { distance, isOpen } = state
+          const toggleDistance = props.toggleDistance
+
           if (distance > 0) {
             const present = distance / toggleDistance
             let opacity =
@@ -109,9 +109,10 @@ export default defineComponent({
     })
 
     const styleObject = computed(() => {
-      const { bottom, transition, backgroundOpacity } = state.style
+      const { bottom, transition, backgroundOpacity, height } = state.style
       return {
         bottom: `${bottom}px`,
+        height: `${height}%`,
         transition,
         backgroundColor: `rgba(255, 255, 255, ${backgroundOpacity})`
       }
@@ -167,7 +168,8 @@ export default defineComponent({
     function end () {
       state.isDragging = false
 
-      const { distance, isOpen, toggleDistance } = state
+      const { distance, isOpen } = state
+      const toggleDistance = props.toggleDistance
 
       if (distance <= toggleDistance && !isOpen) {
         state.style.bottom = toFixedNum(tabHeight.value)
@@ -205,29 +207,14 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.test {
-  background-color: rgb(223, 177, 177);
-  height: 100%;
-}
 .popup {
   position: fixed;
-  height: 80%;
   transform: translateY(100%);
   width: 100%;
   display: flex;
   flex-direction: column;
-}
-.tab {
-  padding: 18px 0;
-  .tab-item {
-    color: hsla(0, 0%, 100%, 0.2);
+  .content {
+    flex: 1;
   }
-}
-li {
-  border: 1px solid #000;
-  margin: 10px;
-}
-.content {
-  flex: 1;
 }
 </style>
