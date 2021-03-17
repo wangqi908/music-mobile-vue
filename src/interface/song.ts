@@ -22,8 +22,20 @@ export interface SongInfo {
   rank?: number;
 }
 
+export interface Creator {
+  nickname: string;
+  avatarUrl: string;
+  backgroundUrl: string;
+  signature: string;
+  id: number;
+}
+
 export interface SongListInfo {
-  list?: SongInfo[];
-  updateTime?: number;
+  list: SongInfo[];
+  updateTime: number;
   loading?: boolean;
+  name: string;
+  coverImgUrl: string;
+  creator: Creator;
+  err?: Error;
 }

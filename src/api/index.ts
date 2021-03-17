@@ -34,7 +34,7 @@ interface Search {
   keywords: string;
   limit?: number | string;
   offset?: number | string;
-  type?: number |string;
+  type?: number | string;
   timestamp?: number;
 }
 /**

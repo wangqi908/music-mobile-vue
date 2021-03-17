@@ -18,7 +18,7 @@ import SongList from '@/components/SongList/SongList.vue'
 export default defineComponent({
   components: { SongList },
   setup () {
-    const state: SongListInfo = reactive({
+    const state = reactive({
       updateTime: 0
     })
 

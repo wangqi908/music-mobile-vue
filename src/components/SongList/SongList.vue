@@ -6,9 +6,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import { SongItem } from '@/components'
+import { defineComponent, onMounted, reactive, toRefs } from 'vue'
 import { useAsyncState } from './useAsyncState'
+import { SongInfo } from '@/interface/song'
+import { SongItem } from '@/components'
 
 export default defineComponent({
   props: {
@@ -17,20 +18,46 @@ export default defineComponent({
       default: '3778678' // 默认热门歌单
     }
   },
-  emits: ['getInfo'],
   components: { SongItem },
+  emits: ['getInfo'],
   setup (props, { emit }) {
-    const { list, loading, updateTime } = useAsyncState(props.id)
+    const state = reactive({
+      list: [] as SongInfo[],
+      loading: false
+    })
+    state.loading = true
+    async function getInfo () {
+      try {
+        const {
+          list,
+          updateTime,
+          coverImgUrl,
+          creator,
+          name
+        } = await useAsyncState(props.id)
+        state.loading = false
+        state.list = list
 
-    emit('getInfo', { list, loading, updateTime })
-
+        emit('getInfo', {
+          list,
+          updateTime,
+          coverImgUrl,
+          creator,
+          name
+        })
+      } catch (error) {
+        state.loading = false
+        emit('getInfo', { err: error })
+      }
+    }
+    onMounted(() => {
+      getInfo()
+    })
     return {
-      loading,
-      updateTime,
-      list
+      ...toRefs(state)
     }
   }
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped></style>
