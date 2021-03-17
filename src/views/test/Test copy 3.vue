@@ -1,7 +1,7 @@
 <template>
   <div>
-    {{ isOpen }}
-    {{ distance }}
+    <button @click="show">show</button>
+
     <div class="popup" :style="styleObject" ref="popup">
       <div
         class="tab"
@@ -39,8 +39,7 @@ import {
   toRefs,
   ref,
   computed,
-  onMounted,
-  watch
+  onMounted
 } from 'vue'
 
 export default defineComponent({
@@ -51,45 +50,35 @@ export default defineComponent({
     const tabHeight = computed(() => {
       return tab.value?.offsetHeight || 0
     })
-    const popupHeight = computed(() => {
-      return popup.value?.offsetHeight || 0
-    })
 
     const state = reactive({
       isOpen: false,
       isDragging: false,
-      toggleDistance: 50,
+
       pageY: 0,
       oldBottom: 0,
-      distance: 0,
-      tabHeight: 0,
       style: {
-        bottom: 0,
-        opacity: 1,
-        transition: 'all 0.2s ease-in 0s'
+        bottom: 0
       }
     })
 
     onMounted(() => {
       state.style.bottom = tabHeight.value
-
-      watch(tab, value => {
-        console.log(value)
-      })
     })
 
     const styleObject = computed(() => {
-      const { bottom, transition, opacity } = state.style
+      const { bottom } = state.style
       return {
-        opacity,
-        bottom: `${bottom}px`,
-        transition
+        bottom: `${bottom}px`
       }
     })
 
-    function start (event: MouseEvent | TouchEvent) {
-      state.style.transition = 'all 0s ease-in 0s'
+    function show () {
+      state.isOpen = !state.isOpen
+      state.isDragging = true
+    }
 
+    function start (event: MouseEvent | TouchEvent) {
       let pageY
       if (event.type === 'mousedown') {
         pageY = (event as MouseEvent).pageY
@@ -114,7 +103,8 @@ export default defineComponent({
       const distance = state.pageY - pageY
       const newBottom = oldBottom + distance
 
-      if (newBottom >= popupHeight.value) {
+      const popupHeight = popup.value?.offsetHeight || 0
+      if (newBottom >= popupHeight) {
         return
       }
       if (newBottom <= tabHeight.value) {
@@ -122,33 +112,16 @@ export default defineComponent({
         return
       }
       state.style.bottom = newBottom
-      state.distance = distance
+
+      const flag = Math.abs(distance) >= 40
+
+      console.log(flag)
     }
     function leave () {
       state.isDragging = false
     }
     function end () {
       state.isDragging = false
-
-      const { distance, isOpen, toggleDistance } = state
-
-      if (distance < toggleDistance && !isOpen) {
-        state.style.bottom = tabHeight.value
-        state.isOpen = false
-      }
-      if (distance >= toggleDistance && !isOpen) {
-        state.style.bottom = popupHeight.value
-        state.isOpen = true
-      }
-      if (distance >= -toggleDistance && isOpen) {
-        state.style.bottom = popupHeight.value
-        state.isOpen = true
-      }
-      if (distance < -toggleDistance && isOpen) {
-        state.style.bottom = tabHeight.value
-        state.isOpen = false
-      }
-      state.style.transition = 'all 0.2s ease-in 0s'
     }
 
     return {
@@ -156,6 +129,7 @@ export default defineComponent({
       popup,
       tab,
       styleObject,
+      show,
       start,
       move,
       end,
@@ -172,7 +146,7 @@ export default defineComponent({
   height: 80%;
   transform: translateY(100%);
   width: 100%;
-
+  // transition: all 0.3s;
   background-color: rgb(220, 222, 228);
   display: flex;
   flex-direction: column;
