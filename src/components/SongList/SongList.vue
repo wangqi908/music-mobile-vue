@@ -34,7 +34,7 @@ export default defineComponent({
           coverImgUrl,
           creator,
           name
-        } = await useAsyncState(props.id)
+        } = await useAsyncState(Number(props.id))
         state.loading = false
         state.list = list
 

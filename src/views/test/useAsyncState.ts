@@ -2,7 +2,6 @@ import { playlistDetailReq } from '@/api'
 import { SongInfo, SongListInfo, Creator } from '@/interface/song'
 interface Item {
   id: number;
-  name: string;
   al: SongInfo;
   ar: { name: string }[];
 }
@@ -38,7 +37,7 @@ export async function useAsyncState (id = 3778678) {
 
     const id = item.id
     const picUrl = item.al.picUrl
-    const name = item.name
+    const name = item.al.name
     return {
       rank,
       artistName,

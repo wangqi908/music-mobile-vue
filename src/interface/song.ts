@@ -3,15 +3,13 @@ export interface SongList {
   picUrl: string;
   name: string;
   song: SongItem;
+  playCount?: number;
+  creatorName?: string;
 }
 
 export interface SongItem {
   name: string;
-  artists: Artists[];
-}
-
-export interface Artists {
-  name: string;
+  artists: { name: string }[];
 }
 
 export interface SongInfo {

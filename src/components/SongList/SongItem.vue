@@ -24,12 +24,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
+import { SongInfo } from '@/interface/song'
 
 export default defineComponent({
   props: {
-    info: Object,
+    info: {
+      type: Object as PropType<SongInfo>,
+      required: true
+    },
     showAlbum: {
       type: Boolean,
       default: false
@@ -39,7 +43,7 @@ export default defineComponent({
     const router = useRouter()
 
     function checkSong () {
-      const id = props.info?.id
+      const id = props.info.id
       router.push({ params: { id }, name: 'Song' })
     }
 

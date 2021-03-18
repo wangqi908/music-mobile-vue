@@ -37,10 +37,10 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable vue/no-unused-components */
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs } from 'vue'
 import { Popup, SimilarPlaylist, SimilarSong, Comment } from './components'
 import uesHandleCardMove from './hooks/uesHandleCardMove'
+import useAsyncState from './hooks/useAsyncState'
 interface ListItem {
   id: number;
   name: string;
@@ -61,7 +61,6 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const data = require('./json.json')
     const state = reactive({
-      componentList: ['SimilarPlaylist', 'SimilarSong', 'Comment'],
       isOpen: false,
       resData: [] as ResDataItem[]
     })
@@ -73,6 +72,12 @@ export default defineComponent({
 
     const { setItemRef, moveTo, active } = uesHandleCardMove()
 
+    onMounted(async () => {
+      console.log(1)
+      const { simiPlaylist, simiSong } = await useAsyncState(77470)
+      console.log(simiPlaylist, simiSong)
+      console.log(2)
+    })
     return {
       ...toRefs(state),
       moveTo,

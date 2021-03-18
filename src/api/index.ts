@@ -38,13 +38,6 @@ export const songDetailReq = (params: { ids: number | string }) =>
 export const playlistDetailReq = (params: { id: number; s?: number }) =>
   req('/playlist/detail', params, 'POST')
 
-interface Search {
-  keywords: string;
-  limit?: number | string;
-  offset?: number | string;
-  type?: number | string;
-  timestamp?: number;
-}
 /**
  *  搜索
  *  说明 : 调用此接口 , 传入搜索关键词可以搜索该音乐 / 专辑 / 歌手 / 歌单 / 用户 , 关键词可以多个 , 以空格隔开 , 如 " 周杰伦 搁浅 "( 不需要登录 ), 搜索获取的 mp3url 不能直接用 , 可通过 /song/url 接口传入歌曲 id 获取具体的播放链接
@@ -105,7 +98,7 @@ export const commentMusicReq = (params: { id: number; limit?: number }) =>
  *  说明 : 调用此接口 , 传入歌曲 id, 可获得相似歌单
  * @param id : 音乐 id
  */
-export const simiPlaylistReq = (params: { id: number; limit?: number }) =>
+export const simiPlaylistReq = (params: { id: number }) =>
   req('/simi/playlist', params, 'POST')
 
 /**
@@ -113,5 +106,5 @@ export const simiPlaylistReq = (params: { id: number; limit?: number }) =>
  *  说明 : 调用此接口 , 传入歌曲 id, 可获得相似歌曲
  * @param id : 音乐 id
  */
-export const simiSongReq = (params: { id: number; limit?: number }) =>
+export const simiSongReq = (params: { id: number }) =>
   req('/simi/song', params, 'POST')

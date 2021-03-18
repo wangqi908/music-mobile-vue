@@ -41,7 +41,7 @@ export default defineComponent({
     })
 
     const route = useRoute()
-    const { id } = route.params
+    const id = Number(route.params.id)
 
     state.loading = true
     function getInfo (info: SongListInfo) {
