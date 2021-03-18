@@ -6,7 +6,7 @@ interface Item {
   ar: Artists[];
 }
 
-export async function useAsyncState (id = '3778678') {
+export async function useAsyncState (id = 3778678) {
   const state: SongListInfo = {
     list: [],
     updateTime: 0,

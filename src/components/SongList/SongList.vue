@@ -14,8 +14,8 @@ import { SongItem } from '@/components'
 export default defineComponent({
   props: {
     id: {
-      type: String,
-      default: '3778678' // 默认热门歌单
+      type: Number,
+      default: 3778678 // 默认热门歌单
     }
   },
   components: { SongItem },
