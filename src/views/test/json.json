@@ -2,7 +2,7 @@
   "data": [
     {
       "id": 0,
-      "type": "aa",
+      "type": "SimilarPlaylist",
       "list": [
         {
           "id": 0,
@@ -20,7 +20,7 @@
     },
     {
       "id": 1,
-      "type": "bb",
+      "type": "SimilarSong",
       "list": [
         {
           "id": 0,
@@ -42,7 +42,7 @@
     },
     {
       "id": 2,
-      "type": "cc",
+      "type": "Comment",
       "list": [
         {
           "id": 0,

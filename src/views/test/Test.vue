@@ -22,9 +22,12 @@
               class="section-content"
               :ref="setItemRef"
             >
-              <li v-for="item in section.list" :key="item.id" class="item">
+              <!-- <li v-for="item in section.list" :key="item.id" class="item">
                 {{ item.name }}
-              </li>
+              </li> -->
+              <keep-alive>
+                <component :is="section.type" :info="section"></component>
+              </keep-alive>
             </ul>
           </div>
         </div>
@@ -34,8 +37,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import Popup from './Popup.vue'
+/* eslint-disable vue/no-unused-components */
+import { defineComponent, reactive, toRefs } from 'vue'
+import { Popup, SimilarPlaylist, SimilarSong, Comment } from './components'
 import uesHandleCardMove from './hooks/uesHandleCardMove'
 interface ListItem {
   id: number;
@@ -47,30 +51,34 @@ interface ResDataItem {
 }
 
 export default defineComponent({
-  components: { Popup },
+  components: {
+    Popup,
+    SimilarPlaylist,
+    SimilarSong,
+    Comment
+  },
   setup () {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const data = require('./json.json')
-
-    const resData: ResDataItem[] = ref(data.data)
-    const isOpen = ref(false)
-    // const state = reactive({
-    //   resData
-    // })
+    const state = reactive({
+      componentList: ['SimilarPlaylist', 'SimilarSong', 'Comment'],
+      isOpen: false,
+      resData: [] as ResDataItem[]
+    })
+    state.resData = data.data
 
     function getOpenStatus (val: boolean) {
-      isOpen.value = val
+      state.isOpen = val
     }
 
     const { setItemRef, moveTo, active } = uesHandleCardMove()
 
     return {
-      resData,
+      ...toRefs(state),
       moveTo,
       active,
       setItemRef,
-      getOpenStatus,
-      isOpen
+      getOpenStatus
     }
   }
 })
