@@ -1,5 +1,5 @@
 <template>
-  <div class="popup" :style="styleObject" ref="popup">
+  <div class="popup" :style="popupStyleObject" ref="popup">
     <div
       class="tab"
       @mousedown="start"
@@ -11,11 +11,11 @@
       @touchend="end"
       ref="tab"
     >
-      <div :style="opacityObject" class="tab-item">
+      <div :style="tabStyleObject" class="tab-item">
         <slot name="tab"></slot>
       </div>
     </div>
-    <div class="content">
+    <div class="content" :style="contentStyleObject">
       <slot name="content"></slot>
     </div>
   </div>
@@ -33,6 +33,7 @@ import {
 } from 'vue'
 
 export default defineComponent({
+  emits: ['getOpenStatus'],
   props: {
     height: {
       // 高度 百分比
@@ -45,7 +46,7 @@ export default defineComponent({
       default: 40
     }
   },
-  setup (props) {
+  setup (props, { emit }) {
     function toFixedNum (num: number, lang = 0) {
       return Number(num.toFixed(lang))
     }
@@ -108,7 +109,14 @@ export default defineComponent({
       )
     })
 
-    const styleObject = computed(() => {
+    watch(
+      () => state.isOpen,
+      val => {
+        emit('getOpenStatus', val)
+      }
+    )
+
+    const popupStyleObject = computed(() => {
       const { bottom, transition, backgroundOpacity, height } = state.style
       return {
         bottom: `${bottom}px`,
@@ -117,11 +125,17 @@ export default defineComponent({
         backgroundColor: `rgba(255, 255, 255, ${backgroundOpacity})`
       }
     })
-    const opacityObject = computed(() => {
+    const tabStyleObject = computed(() => {
       const { backgroundOpacity } = state.style
       const opacity = toFixedNum(backgroundOpacity + 0.2, 2)
       return {
         color: `rgba(55, 55, 55, ${opacity})`
+      }
+    })
+    const contentStyleObject = computed(() => {
+      const contentHeight = popupHeight.value - tabHeight.value
+      return {
+        height: `${contentHeight}px`
       }
     })
 
@@ -195,8 +209,9 @@ export default defineComponent({
       ...toRefs(state),
       popup,
       tab,
-      styleObject,
-      opacityObject,
+      popupStyleObject,
+      tabStyleObject,
+      contentStyleObject,
       start,
       move,
       end,
