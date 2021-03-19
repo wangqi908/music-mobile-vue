@@ -4,20 +4,35 @@
       {{ name }}
     </div>
     <Loading v-else />
+    <SongRelate :id="id" />
+    {{ id }}
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAsyncState } from './hooks/useAsyncState'
+import SongRelate from './components/SongRelate/SongRelate.vue'
 
 export default defineComponent({
+  components: { SongRelate },
   setup () {
-    const { name, loading } = useAsyncState()
+    const route = useRoute()
+    const id = route.params.id as string
+    const { name, loading } = useAsyncState(id)
+
+    watch(
+      () => route.params.id,
+      val => {
+        console.log(val)
+      }
+    )
 
     return {
       name,
-      loading
+      loading,
+      id: Number(id)
     }
   }
 })
@@ -26,5 +41,6 @@ export default defineComponent({
 <style scoped>
 .song {
   height: 100%;
+  background-color: rgba(54, 47, 47, 4);
 }
 </style>
