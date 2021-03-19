@@ -9,7 +9,7 @@
             @click="moveTo(index)"
             :class="{ active: active === index && isOpen }"
           >
-            {{ item.type }}
+            {{ $filters.formatSongRelateTitle(item.type) }}
           </li>
         </ul>
       </template>
@@ -97,5 +97,8 @@ export default defineComponent({
 }
 .wrapper {
   overflow: hidden;
+}
+.section-content {
+  padding: 10px;
 }
 </style>

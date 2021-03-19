@@ -1,8 +1,8 @@
 import { CommentListInterface } from '@/interface/comment'
-export type Type = 'SimilarPlaylist' | 'SimilarSong' | 'Comment'
+import { TypeValve } from '@/interface/song'
 
 export interface Info {
-  type: Type;
+  type: TypeValve;
   status: boolean;
 }
 

@@ -1,3 +1,6 @@
+export type TypeValve = 'SimilarPlaylist' | 'SimilarSong' | 'Comment'
+export type TypeName = '相关歌单' | '相似歌曲' | '精彩评论'
+
 export interface SongList {
   id: string;
   picUrl: string;

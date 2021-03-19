@@ -10,9 +10,9 @@ import {
   SongItem,
   SimiSongInfo,
   PlaylistInfo,
-  CommentInfo,
-  Type
+  CommentInfo
 } from '../interface'
+import { TypeValve } from '@/interface/song'
 import { CommentItem, BeReplied } from '@/interface/comment'
 
 function handleSimilarPlaylistData (songs: PlaylistItem[]) {
@@ -31,7 +31,7 @@ function handleSimilarPlaylistData (songs: PlaylistItem[]) {
     }
   })
   const info = {
-    type: 'SimilarPlaylist' as Type,
+    type: 'SimilarPlaylist' as TypeValve,
     list,
     status: true
   }
@@ -55,7 +55,7 @@ function handleSimilarSongData (songs: SongItem[]) {
     }
   })
   const info = {
-    type: 'SimilarSong' as Type,
+    type: 'SimilarSong' as TypeValve,
     list,
     status: true
   }
@@ -95,7 +95,7 @@ function handleCommentData (comments: CommentItem[]) {
     }
   })
   const info = {
-    type: 'Comment' as Type,
+    type: 'Comment' as TypeValve,
     list,
     status: true
   }
