@@ -4,6 +4,7 @@ import Loading from './Loading.vue'
 
 export { default as SongItem } from './SongList/SongItem.vue'
 export { default as PlaylistItem } from './PlaylistItem.vue'
+export { default as CommentItem } from './CommentItem.vue'
 
 interface Components {
   MySuspense: Component;

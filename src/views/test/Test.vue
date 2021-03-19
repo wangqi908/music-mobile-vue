@@ -65,7 +65,6 @@ export default defineComponent({
       const songRelateInfo = [simiPlaylist, simiSong, comment].filter(
         item => item.status
       )
-      console.log(songRelateInfo)
       state.songRelateInfo = songRelateInfo
     })
     return {

@@ -10,11 +10,10 @@ import {
   SongItem,
   SimiSongInfo,
   PlaylistInfo,
-  CommentItem,
-  BeReplied,
   CommentInfo,
   Type
 } from '../interface'
+import { CommentItem, BeReplied } from '@/interface/comment'
 
 function handleSimilarPlaylistData (songs: PlaylistItem[]) {
   const list = songs.map(item => {
