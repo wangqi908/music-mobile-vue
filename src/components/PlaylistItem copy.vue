@@ -3,16 +3,8 @@
     <div class="img-box">
       <img :src="info.coverImgUrl" :alt="info.name" class="img" />
     </div>
-    <p
-      :class="[
-        showCreatorName ? 'ellipsis-text' : 'ellipsis-text-line-2',
-        'name'
-      ]"
-    >
+    <p class="ellipsis-text-line-2 name">
       {{ info.name }}
-    </p>
-    <p class="ellipsis-text creatorName">
-      {{ info.creatorName }}
     </p>
   </div>
 </template>
@@ -27,13 +19,9 @@ export default defineComponent({
     info: {
       type: Object as PropType<PlaylistItemInterface>,
       required: true
-    },
-    showCreatorName: {
-      type: Boolean,
-      required: false
     }
   },
-  setup () {
+  async setup () {
     const router = useRouter()
     function checkList (id: number) {
       router.push({ params: { id }, name: 'PlayList' })
@@ -48,18 +36,17 @@ export default defineComponent({
 
 <style scoped lang="less">
 .item {
-  width: 100%;
+  padding: 2px;
+  margin-bottom: 10px;
+  width: 33.33%;
   .img-box {
     .img {
       width: 100%;
+      height: 100%;
     }
   }
   .name {
     font-size: 13px;
-  }
-  .creatorName {
-    font-size: 11px;
-    color: #999;
   }
 }
 </style>

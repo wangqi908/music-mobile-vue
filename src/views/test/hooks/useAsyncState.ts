@@ -20,7 +20,7 @@ function handleSimilarPlaylistData (songs: PlaylistItem[]) {
   const list = songs.map(item => {
     const coverImgUrl = item.coverImgUrl
     const name = item.name
-    const creatorName = item.creator.name
+    const creatorName = item.creator.nickname
     const playCount = item.playCount
     const id = item.id
     return {

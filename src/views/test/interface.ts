@@ -10,7 +10,7 @@ export interface PlaylistItem {
   playCount: number;
   name: string;
   coverImgUrl: string;
-  creator: { name: string };
+  creator: { nickname: string };
 }
 
 export interface PlaylistList {

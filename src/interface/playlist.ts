@@ -1,6 +1,7 @@
-export interface PlaylistItem {
+export interface PlaylistItemInterface {
   id: number;
-  picUrl: string;
   name: string;
+  coverImgUrl: string;
+  playCount: number;
   creatorName?: string;
 }

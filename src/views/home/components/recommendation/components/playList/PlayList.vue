@@ -1,6 +1,8 @@
 <template>
   <div v-if="!loading" class="playList">
-    <PlaylistItem v-for="item in list" :key="item.id" :info="item" />
+    <div class="playlist-item" v-for="item in list" :key="item.id">
+      <PlaylistItem :info="item" />
+    </div>
   </div>
   <Loading v-else />
 </template>
@@ -28,11 +30,14 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 10px;
-
-  &::after {
-    content: '';
+  .playlist-item {
+    padding: 2px;
+    margin-bottom: 10px;
     width: 33.33%;
+    &::after {
+      content: '';
+      width: 33.33%;
+    }
   }
 }
 </style>

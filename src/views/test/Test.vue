@@ -81,9 +81,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.test {
-  border: 1px solid #000;
-}
 .tab-box {
   display: flex;
   justify-content: space-between;
@@ -97,17 +94,7 @@ export default defineComponent({
   }
 }
 .content-box {
-  border: 1px solid #000;
   height: 100%;
-  background-color: rgba(226, 226, 226, 0.2);
-}
-.section-content {
-  border-bottom: 3px solid rgb(139, 214, 89);
-  .item {
-    border: 1px solid rgb(196, 81, 81);
-    padding: 10px;
-    margin-bottom: 20px;
-  }
 }
 .wrapper {
   overflow: hidden;
