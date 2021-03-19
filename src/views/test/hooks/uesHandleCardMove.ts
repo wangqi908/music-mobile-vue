@@ -1,4 +1,4 @@
-import { onMounted, reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRefs, Ref, watch } from 'vue'
 
 import BScroll from '@better-scroll/core'
 
@@ -7,7 +7,7 @@ interface Bs {
   y: number;
 }
 
-export default () => {
+export default (wrapper: Ref<HTMLElement | null>) => {
   const state = reactive({
     scrollValue: 0,
     active: 0,
@@ -24,33 +24,40 @@ export default () => {
 
   function moveTo (index: number) {
     state.active = index
+
     bs.scrollTo(0, -state.heightArr[index], 300)
   }
 
   onMounted(() => {
     const heightArr: number[] = [0]
 
-    let res: number = itemRefs.reduce((prev, cur) => {
-      res = prev + cur.offsetHeight
-      heightArr.push(res)
-      return res
-    }, 0)
+    watch(wrapper, () => {
+      if (wrapper !== null) {
+        bs = new BScroll('.wrapper', {
+          probeType: 3,
+          click: true
+        })
 
-    state.heightArr = heightArr
-    bs = new BScroll('.wrapper', {
-      probeType: 3
-    })
+        bs.on('scroll', (pos: Bs) => {
+          const scrollValue = pos.y
+          state.scrollValue = scrollValue
 
-    bs.on('scroll', (pos: Bs) => {
-      const scrollValue = pos.y
-      state.scrollValue = scrollValue
+          let index =
+            heightArr.findIndex(item => {
+              return item > -scrollValue
+            }) - 1
+          index = index < 0 ? 0 : index
+          state.active = index
+        })
 
-      let index =
-        heightArr.findIndex(item => {
-          return item > -scrollValue
-        }) - 1
-      index = index < 0 ? 0 : index
-      state.active = index
+        let res: number = itemRefs.reduce((prev, cur) => {
+          res = prev + cur.offsetHeight
+          heightArr.push(res)
+          return res
+        }, 0)
+
+        state.heightArr = heightArr
+      }
     })
   })
 

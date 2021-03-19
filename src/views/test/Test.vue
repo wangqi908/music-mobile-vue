@@ -1,10 +1,10 @@
 <template>
   <div>
-    <Popup @getOpenStatus="getOpenStatus">
+    <Popup @getOpenStatus="getOpenStatus" v-if="songRelateInfo.length !== 0">
       <template #tab>
         <ul class="tab-box">
           <li
-            v-for="(item, index) in resData"
+            v-for="(item, index) in songRelateInfo"
             :key="index"
             @click="moveTo(index)"
             :class="{ active: active === index && isOpen }"
@@ -14,17 +14,14 @@
         </ul>
       </template>
       <template #content>
-        <div class="content-box wrapper">
+        <div class="content-box wrapper" ref="wrapper">
           <div class="content">
             <ul
-              v-for="(section, index) in resData"
+              v-for="(section, index) in songRelateInfo"
               :key="index"
               class="section-content"
               :ref="setItemRef"
             >
-              <!-- <li v-for="item in section.list" :key="item.id" class="item">
-                {{ item.name }}
-              </li> -->
               <keep-alive>
                 <component :is="section.type" :info="section"></component>
               </keep-alive>
@@ -37,18 +34,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRefs } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, ref } from 'vue'
 import { Popup, SimilarPlaylist, SimilarSong, Comment } from './components'
 import uesHandleCardMove from './hooks/uesHandleCardMove'
 import useAsyncState from './hooks/useAsyncState'
-interface ListItem {
-  id: number;
-  name: string;
-}
-interface ResDataItem {
-  type: string;
-  list: ListItem[];
-}
+
+import { PlaylistInfo, SimiSongInfo, CommentInfo } from './interface'
 
 export default defineComponent({
   components: {
@@ -58,32 +49,32 @@ export default defineComponent({
     Comment
   },
   setup () {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const data = require('./json.json')
     const state = reactive({
       isOpen: false,
-      resData: [] as ResDataItem[]
+      songRelateInfo: [] as (PlaylistInfo | SimiSongInfo | CommentInfo)[]
     })
-    state.resData = data.data
-
+    const wrapper = ref<HTMLElement | null>(null)
     function getOpenStatus (val: boolean) {
       state.isOpen = val
     }
 
-    const { setItemRef, moveTo, active } = uesHandleCardMove()
+    const { setItemRef, moveTo, active } = uesHandleCardMove(wrapper)
 
     onMounted(async () => {
-      console.log(1)
-      const { simiPlaylist, simiSong } = await useAsyncState(77470)
-      console.log(simiPlaylist, simiSong)
-      console.log(2)
+      const { simiPlaylist, simiSong, comment } = await useAsyncState(77470)
+      const songRelateInfo = [simiPlaylist, simiSong, comment].filter(
+        item => item.status
+      )
+      console.log(songRelateInfo)
+      state.songRelateInfo = songRelateInfo
     })
     return {
       ...toRefs(state),
       moveTo,
       active,
       setItemRef,
-      getOpenStatus
+      getOpenStatus,
+      wrapper
     }
   }
 })

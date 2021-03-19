@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>SimilarPlaylist</h2>
     <li v-for="item in info.list" :key="item.id" class="item">
       {{ item.name }}
     </li>
