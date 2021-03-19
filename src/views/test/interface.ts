@@ -45,3 +45,8 @@ export interface SimiSongInfo extends Info {
 export interface CommentInfo extends Info {
   list: CommentListInterface[];
 }
+
+export interface PopupStatus {
+  isOpen: boolean;
+  isDragging: boolean;
+}

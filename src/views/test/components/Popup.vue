@@ -29,8 +29,10 @@ import {
   ref,
   computed,
   onMounted,
-  watch
+  watch,
+  watchEffect
 } from 'vue'
+import { PopupStatus } from '../interface'
 
 export default defineComponent({
   emits: ['getOpenStatus'],
@@ -59,6 +61,7 @@ export default defineComponent({
     const popupHeight = computed(() => {
       return popup.value?.offsetHeight || 0
     })
+
     const backgroundOpacity = 0.1
     const state = reactive({
       isOpen: false,
@@ -109,12 +112,13 @@ export default defineComponent({
       )
     })
 
-    watch(
-      () => state.isOpen,
-      val => {
-        emit('getOpenStatus', val)
+    watchEffect(() => {
+      const status: PopupStatus = {
+        isOpen: state.isOpen,
+        isDragging: state.isDragging
       }
-    )
+      emit('getOpenStatus', status)
+    })
 
     const popupStyleObject = computed(() => {
       const { bottom, transition, backgroundOpacity, height } = state.style
@@ -228,6 +232,7 @@ export default defineComponent({
   width: 100%;
   display: flex;
   flex-direction: column;
+  border-radius: 24px 24px 0 0;
   .content {
     flex: 1;
   }
