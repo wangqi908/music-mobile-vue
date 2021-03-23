@@ -85,6 +85,14 @@ export const songUrlReq = (params: { id: number; br?: number }) =>
   req('/song/url', params, 'POST')
 
 /**
+ * 音乐歌词
+ *  说明 :调用此接口 , 传入音乐 id 可获得对应音乐的歌词
+ * @param id : 音乐 id
+ */
+export const lyricReq = (params: { id: number }) =>
+  req('/lyric', params, 'POST')
+
+/**
  * 歌曲评论
  *  说明 : 调用此接口 , 传入音乐 id 和 limit 参数 , 可获得该音乐的所有评论 ( 不需要登录 )
  * @param id : 音乐 id

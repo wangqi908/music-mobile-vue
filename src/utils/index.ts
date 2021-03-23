@@ -103,3 +103,13 @@ export const removeStorage = (key?: string, id?: number) => {
     localStorage.clear()
   }
 }
+
+/**
+ * 保留小数
+ * @param num number
+ * @param lang number
+ * @returns number
+ */
+export const toFixedNum = (num: number, lang = 0) => {
+  return Number(num.toFixed(lang))
+}
