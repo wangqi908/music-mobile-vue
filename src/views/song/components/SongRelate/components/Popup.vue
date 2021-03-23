@@ -22,6 +22,7 @@
 </template>
 
 <script lang="ts">
+import { useRoute } from 'vue-router'
 import {
   defineComponent,
   reactive,
@@ -49,19 +50,7 @@ export default defineComponent({
     }
   },
   setup (props, { emit }) {
-    function toFixedNum (num: number, lang = 0) {
-      return Number(num.toFixed(lang))
-    }
-    const popup = ref<HTMLElement | null>(null)
-    const tab = ref<HTMLElement | null>(null)
-
-    const tabHeight = computed(() => {
-      return tab.value?.offsetHeight || 0
-    })
-    const popupHeight = computed(() => {
-      return popup.value?.offsetHeight || 0
-    })
-
+    const route = useRoute()
     const backgroundOpacity = 0.1
     const state = reactive({
       isOpen: false,
@@ -76,6 +65,26 @@ export default defineComponent({
         transition: 'all 0.2s ease-in 0s'
       }
     })
+
+    function toFixedNum (num: number, lang = 0) {
+      return Number(num.toFixed(lang))
+    }
+    const popup = ref<HTMLElement | null>(null)
+    const tab = ref<HTMLElement | null>(null)
+
+    const tabHeight = computed(() => {
+      return tab.value?.offsetHeight || 0
+    })
+    const popupHeight = computed(() => {
+      return popup.value?.offsetHeight || 0
+    })
+
+    // 重置位置
+    function resetPosition () {
+      state.isOpen = false
+      state.isDragging = false
+      state.style.bottom = tabHeight.value
+    }
 
     onMounted(() => {
       state.style.bottom = tabHeight.value
@@ -111,6 +120,14 @@ export default defineComponent({
         }
       )
     })
+
+    watch(
+      () => route.params.id,
+      () => {
+        // 路由参数变化,组件重置位置
+        resetPosition()
+      }
+    )
 
     watchEffect(() => {
       const status: PopupStatus = {
@@ -219,7 +236,8 @@ export default defineComponent({
       start,
       move,
       end,
-      leave
+      leave,
+      resetPosition
     }
   }
 })

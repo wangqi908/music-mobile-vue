@@ -40,7 +40,8 @@ import {
   reactive,
   toRefs,
   ref,
-  computed
+  computed,
+  watch
 } from 'vue'
 import { Popup, SimilarPlaylist, SimilarSong, Comment } from './components'
 import uesHandleCardMove from './hooks/uesHandleCardMove'
@@ -56,7 +57,7 @@ import {
 export default defineComponent({
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true
     }
   },
@@ -90,14 +91,27 @@ export default defineComponent({
 
     const { setItemRef, moveTo, active } = uesHandleCardMove(wrapper)
 
-    onMounted(async () => {
-      const { simiPlaylist, simiSong, comment } = await useAsyncState(props.id)
-      // const { simiPlaylist, simiSong, comment } = await useAsyncState(77470)
+    async function getInfoAsync () {
+      const { simiPlaylist, simiSong, comment } = await useAsyncState(
+        Number(props.id)
+      )
       const songRelateInfo = [simiPlaylist, simiSong, comment].filter(
         item => item.status && item.list.length
       )
       state.songRelateInfo = songRelateInfo
+    }
+
+    onMounted(() => {
+      getInfoAsync()
     })
+
+    watch(
+      () => props.id,
+      () => {
+        getInfoAsync()
+      }
+    )
+
     return {
       ...toRefs(state),
       moveTo,

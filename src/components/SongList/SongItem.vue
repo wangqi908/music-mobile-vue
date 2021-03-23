@@ -50,7 +50,6 @@ export default defineComponent({
     const router = useRouter()
     function checkSong () {
       const id = props.info.id
-      console.log(11)
       router.push({ params: { id }, name: 'Song' })
     }
 
