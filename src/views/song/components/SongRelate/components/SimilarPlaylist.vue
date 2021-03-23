@@ -39,6 +39,7 @@ export default defineComponent({
     justify-content: space-between;
     .playlist-item {
       width: 31%;
+      height: calc(31vw + 33px);
     }
   }
 }
