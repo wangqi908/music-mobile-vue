@@ -50,3 +50,19 @@ export interface PopupStatus {
   isOpen: boolean;
   isDragging: boolean;
 }
+
+export interface PopupStyleInterface {
+  bottom: number;
+  height: number;
+  backgroundOpacity: number;
+  transition: string;
+}
+
+export interface PopupStateInterface {
+  isOpen: boolean;
+  isDragging: boolean;
+  pageY: number;
+  oldBottom: number;
+  distance: number;
+  style: PopupStyleInterface;
+}

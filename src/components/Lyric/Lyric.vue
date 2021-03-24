@@ -16,9 +16,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, PropType } from 'vue'
-import { handleLrc } from './hooks/userHandleLrc'
-import { setDom } from './hooks/userHandleDom'
-import { handleBScroll } from './hooks/userHandleBScroll'
+import { handleLrc } from './hooks/useHandleLrc'
+import { setDom } from './hooks/useHandleDom'
+import { handleBScroll } from './hooks/useHandleBScroll'
 import { LyricListItem } from './interface'
 
 export default defineComponent({
