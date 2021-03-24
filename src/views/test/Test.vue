@@ -1,76 +1,46 @@
 <template>
   <div class="test">
-    test
-    <div class="wrapper">
-      <ul class="content">
-        <li v-for="(item, index) in lyricList" :key="item.time + index">
-          {{ item.text }}
-        </li>
-      </ul>
-    </div>
+    <audio id="audio" controls preload :src="src" ref="audioDom"></audio>
+    <Lyric
+      :audioDom="audioDom"
+      :lyric="lyric"
+      v-if="audioDom"
+      @changeCurrent="changeCurrent"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from 'vue'
-import BScroll from '@better-scroll/core'
-import { toFixedNum } from '@/utils'
+import { defineComponent, reactive, toRefs, ref } from 'vue'
+import Lyric from '@/components/Lyric/Lyric.vue'
 
-interface LyricListItem {
-  text: string;
-  time: number;
-}
 export default defineComponent({
+  components: { Lyric },
   setup () {
     const state = reactive({
-      lyricList: [] as LyricListItem[]
+      src: '',
+      lyric: ''
     })
-    const lyric = require('./lyric.json').lrc.lyric.split(/[\n]/g)
-    lyric.pop()
-    function timeToSecond (val: string) {
-      const [minuteStr, secondStr] = val.split(':')
-      return toFixedNum(Number(minuteStr) * 60 + Number(secondStr), 2)
+    const audioDom = ref<HTMLMediaElement | null>(null)
+
+    const src = require('./url.json').data[0].url
+    const lyric = require('./lyric.json').lrc.lyric
+    state.src = src
+    state.lyric = lyric
+
+    function changeCurrent (currentTime: number) {
+      if (audioDom.value) {
+        audioDom.value.currentTime = currentTime
+      }
     }
 
-    const lyricList: LyricListItem[] = lyric.map((item: string) => {
-      const reg = /\[([^)]*)\]/
-      const timeArr = item.match(reg)
-      const text = item.replace(reg, '').trim()
-      let time = 0
-      if (timeArr !== null && text !== '') {
-        time = timeToSecond(timeArr[1])
-      }
-      return {
-        text,
-        time
-      }
-    })
-
-    state.lyricList = lyricList
-
-    onMounted(() => {
-      new BScroll('.wrapper', {
-        probeType: 3,
-        click: true
-      })
-    })
-
     return {
+      audioDom,
+      changeCurrent,
       ...toRefs(state)
     }
   }
 })
 </script>
 
-<style scoped lang="less">
-.test {
-  height: 100%;
-  .wrapper {
-    height: 200px;
-    border: 1px solid #000;
-  }
-  .content {
-    border: 1px solid rgb(202, 89, 89);
-  }
-}
-</style>
+<style scoped></style>
