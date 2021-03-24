@@ -5,12 +5,15 @@
 
   <div class="song-content">
     <audio id="audio" controls preload :src="src" ref="audioDom"></audio>
-    <Lyric
-      :audioDom="audioDom"
-      :lyric="lyric"
-      v-if="audioDom"
-      @changeCurrent="changeCurrent"
-    />
+    <button @click="showLrc">歌词</button>
+    <transition name="fade">
+      <Lyric
+        v-if="isShowLrc"
+        v-model:isShowLrc="isShowLrc"
+        :audioDom="audioDom"
+        :lyric="lyric"
+      />
+    </transition>
   </div>
 </template>
 
@@ -22,6 +25,7 @@ export default defineComponent({
   components: { Lyric },
   setup () {
     const state = reactive({
+      isShowLrc: false,
       src: '',
       lyric: ''
     })
@@ -32,15 +36,13 @@ export default defineComponent({
     state.src = src
     state.lyric = lyric
 
-    function changeCurrent (currentTime: number) {
-      if (audioDom.value) {
-        audioDom.value.currentTime = currentTime
-      }
+    function showLrc () {
+      state.isShowLrc = true
     }
 
     return {
       audioDom,
-      changeCurrent,
+      showLrc,
       ...toRefs(state)
     }
   }
@@ -52,7 +54,7 @@ export default defineComponent({
   background-image: url(http://p1.music.126.net/R0wMPraoQqedutLeQz2okA==/109951163269912492.jpg?imageView&thumbnail=50y50&quality=15&tostatic=0);
   opacity: 1;
   transform: scale(1.5);
-  filter: blur(30px);
+  filter: blur(100px);
   background-color: #161824;
   background-position: 50%;
   background-repeat: no-repeat;
@@ -77,7 +79,7 @@ export default defineComponent({
 }
 .song-content {
   position: absolute;
-  border: 1px solid #000;
   z-index: 10;
+  width: 100%;
 }
 </style>

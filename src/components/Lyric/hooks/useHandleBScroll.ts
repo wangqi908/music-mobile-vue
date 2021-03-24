@@ -32,17 +32,20 @@ export const handleBScroll = (
     })
   }
 
+  function getActiveIndex (timeStamp: number) {
+    return lyricList.findIndex((item, index) => {
+      return item.ms < timeStamp && lyricList[index + 1]
+        ? lyricList[index + 1].ms > timeStamp
+        : true
+    })
+  }
+
   function setActiveIndex () {
     if (audioDom !== null) {
       audioDom.addEventListener('timeupdate', (event: Event) => {
         const target = event.target as HTMLMediaElement
         const timeStamp = target.currentTime * 1000
-
-        state.activeIndex = lyricList.findIndex((item, index) => {
-          return item.ms < timeStamp && lyricList[index + 1]
-            ? lyricList[index + 1].ms > timeStamp
-            : true
-        })
+        state.activeIndex = getActiveIndex(timeStamp)
       })
     }
   }
@@ -78,6 +81,10 @@ export const handleBScroll = (
   onMounted(() => {
     initBScroll()
     setActiveIndex()
+    if (audioDom) {
+      // 初始化显示歌词位置
+      state.activeIndex = getActiveIndex(audioDom.currentTime * 1000)
+    }
   })
 
   return {

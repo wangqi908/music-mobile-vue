@@ -1,12 +1,11 @@
 <template>
-  <div class="wrapper" ref="wrapperDom">
+  <div class="wrapper" ref="wrapperDom" @click="warpperClick">
     <ul class="content" ref="contentDom">
       <li
         v-for="(item, index) in lyricList"
         :key="item.ms + index"
         :class="['lyric-item', { active: activeIndex === index }]"
         :ref="setItemRef"
-        @dblclick="lyricClick(item)"
       >
         {{ item.content }}
       </li>
@@ -22,7 +21,6 @@ import { handleBScroll } from './hooks/useHandleBScroll'
 import { LyricListItem } from './interface'
 
 export default defineComponent({
-  emits: ['changeCurrent'],
   props: {
     lyric: {
       type: String,
@@ -31,6 +29,9 @@ export default defineComponent({
     audioDom: {
       type: Object as PropType<HTMLMediaElement>,
       required: true
+    },
+    isShowLrc: {
+      type: Boolean
     }
   },
   setup (props, { emit }) {
@@ -60,19 +61,22 @@ export default defineComponent({
     )
 
     // 双击歌词跳转时间
-    function lyricClick (item: LyricListItem) {
-      if (props.audioDom !== null) {
-        emit('changeCurrent', item.ms / 1000)
-      }
+    // function lyricClick (item: LyricListItem) {
+    //   if (props.audioDom !== null) {
+    //     emit('changeCurrent', item.ms / 1000)
+    //   }
+    // }
+    function warpperClick () {
+      emit('update:isShowLrc', false)
     }
 
     return {
       ...toRefs(state),
-      lyricClick,
       setItemRef,
       wrapperDom,
       contentDom,
-      activeIndex
+      activeIndex,
+      warpperClick
     }
   }
 })
@@ -82,13 +86,15 @@ export default defineComponent({
 .wrapper {
   overflow: hidden;
   height: 500px;
-  background-color: rgb(100, 100, 100);
+  border: 4px solid rgb(233, 45, 45);
   .content {
     .lyric-item {
       transition: all 1s;
-      color: rgba(167, 164, 164, 0.6);
+      color: hsla(0, 0%, 100%, 0.3);
+      font-size: 15px;
+      text-align: center;
+      padding: 10px;
     }
-
     .active {
       color: rgb(255, 255, 255);
     }
