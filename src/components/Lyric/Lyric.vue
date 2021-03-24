@@ -79,23 +79,18 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.test {
-  height: 100%;
-  .wrapper {
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.2);
-    height: 500px;
-    .content {
-      border: 4px solid rgb(207, 67, 67);
+.wrapper {
+  overflow: hidden;
+  height: 500px;
+  background-color: rgb(100, 100, 100);
+  .content {
+    .lyric-item {
+      transition: all 1s;
+      color: rgba(167, 164, 164, 0.6);
+    }
 
-      .lyric-item {
-        color: #999;
-        transition: all 1s;
-      }
-
-      .active {
-        background-color: rgb(144, 252, 243);
-      }
+    .active {
+      color: rgb(255, 255, 255);
     }
   }
 }
