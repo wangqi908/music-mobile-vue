@@ -85,12 +85,12 @@ export default defineComponent({
 <style lang="less" scoped>
 .wrapper {
   overflow: hidden;
-  height: 500px;
-  border: 4px solid rgb(233, 45, 45);
+  height: 100%;
   .content {
     .lyric-item {
       transition: all 1s;
-      color: hsla(0, 0%, 100%, 0.3);
+      color: hsla(0, 0%, 100%, 0.4);
+      // color: rgb(110, 110, 110);
       font-size: 15px;
       text-align: center;
       padding: 10px;
