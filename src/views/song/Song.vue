@@ -1,13 +1,22 @@
 <template>
-  <div class="test">
+  <div class="background" :style="bgStyle">
     <div class="shade"></div>
   </div>
 
   <div class="song-content" v-if="!loading">
-    <audio id="audio" controls preload :src="src" ref="audioDom"></audio>
+    <audio
+      id="audio"
+      controls
+      preload
+      autoplay
+      :src="src"
+      ref="audioDom"
+    ></audio>
     <div class="body-box">
       <transition name="fade" mode="out-in">
-        <button @click="showLrc" v-if="!isShowLrc">歌词</button>
+        <div class="info" v-if="!isShowLrc" @click="showLrc">
+          <div class="name">{{ songInfo.name }}</div>
+        </div>
         <Lyric
           v-else
           v-model:isShowLrc="isShowLrc"
@@ -18,15 +27,15 @@
     </div>
     <div class="progress-box">
       <Progress
-        v-if="isAudioLaded"
+        v-if="isAudioLaded && audioDom"
         :audioDom="audioDom"
         @changeMediaCurrent="changeMediaCurrent"
       />
-      <SongRelate :id="id" />
     </div>
   </div>
 
-  <Loading v-else />
+  <Loading isFullScreen v-else />
+  <SongRelate :id="id" />
 </template>
 
 <script lang="ts">
@@ -43,12 +52,15 @@ export default defineComponent({
     const route = useRoute()
     const state = reactive({
       id: route.params.id as string,
-      name: '',
+      songInfo: {},
       loading: false,
       isShowLrc: false,
       isAudioLaded: false,
       src: '',
-      lyric: ''
+      lyric: '',
+      bgStyle: {
+        backgroundImage: ''
+      }
     })
     const audioDom = ref<HTMLMediaElement | null>(null)
 
@@ -68,14 +80,17 @@ export default defineComponent({
     function changeMediaCurrent (time: number) {
       if (audioDom.value) {
         audioDom.value.currentTime = time
+        audioDom.value.play()
       }
     }
 
     async function getInfo () {
       state.loading = true
       try {
-        const { src, lyric } = await useAsyncState(state.id)
+        const { songInfo, src, lyric } = await useAsyncState(state.id)
         state.loading = false
+        state.songInfo = songInfo
+        state.bgStyle.backgroundImage = `url(${songInfo.picUrl}?imageView&thumbnail=50y50&quality=15&tostatic=0) `
         state.src = src
         state.lyric = lyric
       } catch (error) {
@@ -84,17 +99,15 @@ export default defineComponent({
       }
     }
 
-    onMounted(() => {
-      getInfo()
-      setAudioLaded()
+    onMounted(async () => {
+      await getInfo()
+      await setAudioLaded()
     })
 
     watch(
       () => route.params.id,
       val => {
-        console.log(val)
         state.id = val as string
-        getInfo()
       }
     )
 
@@ -109,8 +122,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.test {
-  background-image: url(http://p1.music.126.net/R0wMPraoQqedutLeQz2okA==/109951163269912492.jpg?imageView&thumbnail=50y50&quality=15&tostatic=0);
+.background {
   opacity: 1;
   transform: scale(1.5);
   filter: blur(170px);
@@ -140,6 +152,10 @@ export default defineComponent({
   position: absolute;
   z-index: 10;
   width: 100%;
+  height: 100%;
+}
+.info {
+  border: 1px solid #000;
   height: 100%;
 }
 #audio {

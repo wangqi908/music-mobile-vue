@@ -16,7 +16,7 @@ export interface SongItem {
 }
 
 export interface SongInfo {
-  artistName: string;
+  artistName?: string;
   id: string;
   picUrl: string;
   name: string;

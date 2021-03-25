@@ -14,9 +14,12 @@ export const handleLrc = (lrc: string) => {
   arr.forEach((item: string) => {
     const timeArr = item.match(reg)
     const content = item.replace(reg, '').trim()
+
     let ms = 0
     if (timeArr !== null && content !== '') {
-      ms = timeToMS(timeArr[1])
+      if (!timeArr[1].includes('[')) {
+        ms = timeToMS(timeArr[1])
+      }
       lyricList.push({
         content,
         time: timeArr[1],

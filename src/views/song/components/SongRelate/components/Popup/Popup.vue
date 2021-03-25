@@ -125,6 +125,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   border-radius: 24px 24px 0 0;
+  z-index: 10;
   .content {
     flex: 1;
   }

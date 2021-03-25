@@ -9,14 +9,14 @@ export const playlistHotReq = () => req('/playlist/hot')
  * @param limit ?可选参数 : limit: 取出数量 , 默认为 30 (不支持 offset)
  */
 export const personalizedReq = (params: { limit?: number }) =>
-  req('/personalized', params, 'POST')
+  req('/personalized', params, 'GET')
 
 /**
  * 推荐新音乐
  * @param limit 可选参数
  */
 export const personalizedNewSongReq = (params: { limit?: number }) =>
-  req('/personalized/newsong', params, 'POST')
+  req('/personalized/newsong', params, 'GET')
 
 /**
  * 歌曲详情
@@ -27,7 +27,7 @@ export const personalizedNewSongReq = (params: { limit?: number }) =>
  * @param ids 音乐 id, 如 ids=347230
  */
 export const songDetailReq = (params: { ids: number | string }) =>
-  req('/song/detail', params, 'POST')
+  req('/song/detail', params, 'GET')
 
 /**
  * 获取歌单详情
@@ -36,7 +36,7 @@ export const songDetailReq = (params: { ids: number | string }) =>
  * @param s  可选参数 : s : 歌单最近的 s 个收藏者,默认为8
  */
 export const playlistDetailReq = (params: { id: number; s?: number }) =>
-  req('/playlist/detail', params, 'POST')
+  req('/playlist/detail', params, 'GET')
 
 /**
  *  搜索
@@ -54,7 +54,7 @@ export const searchReq = (params: {
   keywords: string;
   limit?: number;
   type?: number;
-}) => req('/search', params, 'POST')
+}) => req('/search', params, 'GET')
 
 /**
  * 热搜列表
@@ -70,7 +70,7 @@ export const searchHotReq = () => req('/search/hot')
  * @param type ?:可选参数 如果传 'mobile' 则返回移动端数据
  */
 export const searchSuggestReq = (params: { keywords: string; type?: string }) =>
-  req('/search/suggest', params, 'POST')
+  req('/search/suggest', params, 'GET')
 
 /**
  * 获取音乐 url
@@ -82,15 +82,14 @@ export const searchSuggestReq = (params: { keywords: string; type?: string }) =>
  * @param br?: 可选参数 码率,默认设置了 999000 即最大码率,如果要 320k 则可设置为 320000,其他类推
  */
 export const songUrlReq = (params: { id: number; br?: number }) =>
-  req('/song/url', params, 'POST')
+  req('/song/url', params, 'GET')
 
 /**
  * 音乐歌词
  *  说明 :调用此接口 , 传入音乐 id 可获得对应音乐的歌词
  * @param id : 音乐 id
  */
-export const lyricReq = (params: { id: number }) =>
-  req('/lyric', params, 'POST')
+export const lyricReq = (params: { id: number }) => req('/lyric', params, 'GET')
 
 /**
  * 歌曲评论
@@ -99,7 +98,7 @@ export const lyricReq = (params: { id: number }) =>
  * @param limit?: 可选参数 : limit: 取出评论数量 , 默认为 20
  */
 export const commentMusicReq = (params: { id: number; limit?: number }) =>
-  req('/comment/music', params, 'POST')
+  req('/comment/music', params, 'GET')
 
 /**
  * 相似歌单
@@ -107,7 +106,7 @@ export const commentMusicReq = (params: { id: number; limit?: number }) =>
  * @param id : 音乐 id
  */
 export const simiPlaylistReq = (params: { id: number }) =>
-  req('/simi/playlist', params, 'POST')
+  req('/simi/playlist', params, 'GET')
 
 /**
  * 相似音乐
@@ -115,4 +114,4 @@ export const simiPlaylistReq = (params: { id: number }) =>
  * @param id : 音乐 id
  */
 export const simiSongReq = (params: { id: number }) =>
-  req('/simi/song', params, 'POST')
+  req('/simi/song', params, 'GET')
