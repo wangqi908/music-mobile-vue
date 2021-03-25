@@ -113,3 +113,17 @@ export const removeStorage = (key?: string, id?: number) => {
 export const toFixedNum = (num: number, lang = 0) => {
   return Number(num.toFixed(lang))
 }
+
+/**
+ * 秒转 分:秒
+ * @param second number
+ * @returns string
+ */
+export const sToMS = (second: number) => {
+  let minute = 0 // 分
+  minute = Math.floor(second / 60)
+  second = Math.floor(second % 60)
+  const minuteStr = minute < 10 ? '0' + minute : minute
+  const secondStr = second < 10 ? '0' + second : second
+  return minuteStr + ':' + secondStr
+}

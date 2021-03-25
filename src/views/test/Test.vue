@@ -1,85 +1,53 @@
 <template>
-  <div class="test">
-    <div class="shade"></div>
-  </div>
-
-  <div class="song-content">
+  <div>
     <audio id="audio" controls preload :src="src" ref="audioDom"></audio>
-    <button @click="showLrc">歌词</button>
-    <transition name="fade">
-      <Lyric
-        v-if="isShowLrc"
-        v-model:isShowLrc="isShowLrc"
-        :audioDom="audioDom"
-        :lyric="lyric"
-      />
-    </transition>
+    <Progress
+      :audioDom="audioDom"
+      v-if="isAudioLaded"
+      @changeMediaCurrent="changeMediaCurrent"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref } from 'vue'
-import Lyric from '@/components/Lyric/Lyric.vue'
+import { defineComponent, reactive, toRefs, ref, onMounted } from 'vue'
+import Progress from './Progress/Progress.vue'
 
 export default defineComponent({
-  components: { Lyric },
+  components: { Progress },
   setup () {
     const state = reactive({
-      isShowLrc: false,
-      src: '',
-      lyric: ''
+      src: 'http://192.168.10.106/song.flac',
+      isAudioLaded: false
     })
     const audioDom = ref<HTMLMediaElement | null>(null)
 
-    const src = require('./url.json').data[0].url
-    const lyric = require('./lyric.json').lrc.lyric
-    state.src = src
-    state.lyric = lyric
-
-    function showLrc () {
-      state.isShowLrc = true
+    // 判断audioDom是否加载完毕
+    function setAudioLaded () {
+      if (audioDom.value !== null) {
+        audioDom.value.addEventListener('loadedmetadata', () => {
+          state.isAudioLaded = true
+        })
+      }
     }
 
+    function changeMediaCurrent (time: number) {
+      if (audioDom.value) {
+        audioDom.value.currentTime = time
+      }
+    }
+
+    onMounted(() => {
+      setAudioLaded()
+    })
+
     return {
+      ...toRefs(state),
       audioDom,
-      showLrc,
-      ...toRefs(state)
+      changeMediaCurrent
     }
   }
 })
 </script>
 
-<style scoped lang="less">
-.test {
-  background-image: url(http://p1.music.126.net/R0wMPraoQqedutLeQz2okA==/109951163269912492.jpg?imageView&thumbnail=50y50&quality=15&tostatic=0);
-  opacity: 1;
-  transform: scale(1.5);
-  filter: blur(100px);
-  background-color: #161824;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  background-size: auto 100%;
-  transform-origin: center;
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1;
-}
-.shade {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 2;
-  width: 100%;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0), #000);
-}
-.song-content {
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-}
-</style>
+<style scoped lang="less"></style>

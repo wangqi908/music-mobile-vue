@@ -1,5 +1,5 @@
 import { App } from 'vue'
-import { formatTime } from '@/utils'
+import { formatTime, sToMS } from '@/utils'
 import { songRelateList } from '@/utils/dict'
 import { TypeValve } from '@/interface/song'
 const filter = {
@@ -14,6 +14,9 @@ const filter = {
   },
   formatSongRelateTitle (valve: TypeValve) {
     return songRelateList.find(item => item.valve === valve)?.name || ''
+  },
+  formatSToMS (second: number) {
+    return sToMS(second)
   }
 }
 export const addGlobalFilters = (app: App) => {
