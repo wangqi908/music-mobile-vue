@@ -7,6 +7,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
+    const sendData = config
+    sendData.params.timestamp = +new Date()
     return config
   },
   function (error) {

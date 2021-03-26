@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" ref="wrapperDom" @click="warpperClick">
-    <ul class="content" ref="contentDom">
+    <ul class="content" ref="contentDom" v-if="lyricList.length">
       <li
         v-for="(item, index) in lyricList"
         :key="item.ms + index"
@@ -10,6 +10,9 @@
         {{ item.content }}
       </li>
     </ul>
+    <div class="no-lrc" v-else>
+      纯音乐，无歌词
+    </div>
   </div>
 </template>
 
@@ -90,7 +93,6 @@ export default defineComponent({
     .lyric-item {
       transition: all 1s;
       color: hsla(0, 0%, 100%, 0.4);
-      // color: rgb(110, 110, 110);
       font-size: 15px;
       text-align: center;
       padding: 10px;
@@ -98,6 +100,14 @@ export default defineComponent({
     .active {
       color: rgb(255, 255, 255);
     }
+  }
+
+  .no-lrc {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    color: hsla(0, 0%, 100%, 0.4);
   }
 }
 </style>
