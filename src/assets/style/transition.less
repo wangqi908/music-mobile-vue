@@ -7,3 +7,35 @@
 .fade-leave-to {
   opacity: 0;
 }
+
+// message插件过度效果
+.msg-enter-active,
+.msg-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.msg-enter-from,
+.msg-leave-to {
+  opacity: 0;
+}
+
+.msg-enter-active {
+  .content {
+    animation: bounce-in 0.2s;
+  }
+}
+.msg-leave-active {
+  .content {
+    animation: bounce-in 0.2s reverse;
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

@@ -1,27 +1,19 @@
 import { createVNode, render, ComponentPublicInstance } from 'vue'
 import MessageConstructor from './index.vue'
-import type {
-  MessageQueueItem,
-  MessageOptionsInter,
-  MessageParams
-} from './types'
+import { MessageItem, MessageOptionsInter, MessageParams } from './types'
 
 interface Test extends ComponentPublicInstance {
   visible: boolean;
 }
-
-let instance = {} as MessageQueueItem
-
+let instance = {} as MessageItem
 export function close (): void {
   const proxy = instance?.vm?.component?.proxy
   if (proxy) {
     ;(proxy as Test).visible = false
   }
-  console.log(instance)
 }
 
 const Message = function (opts: MessageParams = {} as MessageParams) {
-  console.log(opts)
   if (typeof opts === 'string') {
     opts = {
       message: opts
