@@ -1,12 +1,25 @@
 import { createVNode, render, ComponentPublicInstance } from 'vue'
 import MessageConstructor from './index.vue'
 import type {
-  MessageQueue,
+  MessageQueueItem,
   MessageOptionsInter,
   MessageParams
 } from './types'
 
-let instances: MessageQueue = []
+interface Test extends ComponentPublicInstance {
+  visible: boolean;
+}
+
+let instance = {} as MessageQueueItem
+
+export function close (): void {
+  const proxy = instance?.vm?.component?.proxy
+  if (proxy) {
+    ;(proxy as Test).visible = false
+  }
+  console.log(instance)
+}
+
 const Message = function (opts: MessageParams = {} as MessageParams) {
   console.log(opts)
   if (typeof opts === 'string') {
@@ -25,26 +38,13 @@ const Message = function (opts: MessageParams = {} as MessageParams) {
       render(null, container)
     }
   }
+  close()
+  instance = { vm }
 
-  instances.push({ vm })
   render(vm, container)
   if (container.firstElementChild) {
     document.body.appendChild(container.firstElementChild)
   }
-}
-
-interface Test extends ComponentPublicInstance {
-  visible: boolean;
-}
-
-export function close (): void {
-  for (let i = instances.length - 1; i >= 0; i--) {
-    const instance = instances[i].vm.component
-    if (instance && instance.proxy) {
-      ;(instance.proxy as Test).visible = false
-    }
-  }
-  instances = []
 }
 
 Message.close = close

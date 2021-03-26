@@ -9,7 +9,7 @@ export type MessageParams = MessageOptionsInter | string
 
 export type MessageVM = VNode
 
-type MessageQueueItem = {
+export type MessageQueueItem = {
   vm: MessageVM
 }
 
