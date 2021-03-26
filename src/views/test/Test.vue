@@ -1,24 +1,30 @@
 <template>
   <div>
+    {{ isModalVisible }}
     <button @click="show">aa</button>
-    {{ isShow }}
-    <Child v-if="isShow" />
+    <!-- <Message v-model:visible="isModalVisible" /> -->
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import Child from './Child.vue'
+import { defineComponent, ref, getCurrentInstance } from 'vue'
+// import Message from './Message.vue'
 
 export default defineComponent({
-  components: { Child },
+  // components: { Message },
+
   setup () {
-    const isShow = ref(false)
+    const instance = getCurrentInstance()
+    const isModalVisible = ref(true)
     function show () {
-      isShow.value = !isShow.value
+      isModalVisible.value = !isModalVisible.value
+      if (instance && instance.proxy) {
+        instance.proxy.$hello.sayHello('aa')
+      }
     }
+
     return {
-      isShow,
+      isModalVisible,
       show
     }
   }
