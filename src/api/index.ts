@@ -54,7 +54,7 @@ export const searchReq = (params: {
   keywords: string;
   limit?: number;
   type?: number;
-}) => req('/search', params, 'GET')
+}) => req('/cloudsearch', params, 'GET')
 
 /**
  * 热搜列表

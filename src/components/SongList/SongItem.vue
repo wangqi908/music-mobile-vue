@@ -12,6 +12,8 @@
     <div class="content">
       <div class="song-name ellipsis-text">
         <span>{{ info.name }}</span>
+        ---
+        <span>{{ info.copyright }}</span>
       </div>
       <div class="artist-name ellipsis-text">
         <span>

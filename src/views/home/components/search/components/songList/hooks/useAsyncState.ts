@@ -22,12 +22,14 @@ export const getInfo = async (keywords: string, offset = 1, limit = 10) => {
     const id = item.id
     const name = item.name
     const albumName = item.album.name
+    const copyright = item.copyrightId !== 0
 
     return {
       artistName,
       id,
       name,
-      albumName
+      albumName,
+      copyright
     }
   })
 

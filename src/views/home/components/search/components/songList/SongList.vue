@@ -70,7 +70,8 @@ export default defineComponent({
         document.documentElement.clientHeight || document.body.clientHeight
       const scrollHeight =
         document.documentElement.scrollHeight || document.body.scrollHeight
-      if (scrollTop + windowHeight === scrollHeight) {
+
+      if (scrollTop + windowHeight + 20 >= scrollHeight) {
         search()
       }
     }
@@ -81,7 +82,6 @@ export default defineComponent({
     })
 
     onUnmounted(() => {
-      // search = null
       document.removeEventListener('scroll', onReachBottom)
     })
 

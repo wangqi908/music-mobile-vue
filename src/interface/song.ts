@@ -21,6 +21,7 @@ export interface SongInfo {
   picUrl: string;
   name: string;
   rank?: number;
+  copyright?: boolean;
 }
 
 export interface Creator {
