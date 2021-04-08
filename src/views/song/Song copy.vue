@@ -172,11 +172,11 @@ export default defineComponent({
   display: none;
 }
 .body-box {
-  height: 80%;
+  height: 78%;
   padding-bottom: 10px;
 }
 .progress-box {
-  height: 20%;
+  height: 22%;
   padding: 0 20px;
 }
 </style>

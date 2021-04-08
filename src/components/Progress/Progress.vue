@@ -84,10 +84,12 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 22px;
     .time {
       color: rgb(104, 104, 104);
       font-size: 12px;
       text-align: center;
+      color: #fefefe;
     }
     .btn {
       width: 60px;
@@ -95,20 +97,19 @@ export default defineComponent({
       line-height: 30px;
       text-align: center;
       .iconfont {
-        font-size: 20px;
+        font-size: 24px;
+        color: #fefefe;
       }
     }
   }
   .progress-box {
     height: 6px;
-    // background-color: hsla(0, 0%, 83%, 0.9);
     background-color: rgb(179, 179, 179);
     border-radius: 20px;
     overflow: hidden;
     .inner {
       height: 100%;
       background-color: rgb(88, 88, 88);
-      // background-color: hsla(0, 0%, 26%, 0.9);
     }
   }
 }

@@ -1,8 +1,13 @@
 <template>
-  <div :class="['roll', isPlaying ? 'running' : 'paused']">
-    <img :src="picUrl" class="pic" />
-    <div class="light">
-      <img src="./img/disc_light.png" alt="" />
+  <div class="roll-wrap">
+    <div :class="['needle', isPlaying ? '' : 'rotate']">
+      <img src="./img/needle-ab.png" alt="" />
+    </div>
+    <div :class="['roll', isPlaying ? 'running' : 'paused']">
+      <img :src="picUrl" class="pic" />
+      <div class="light">
+        <img src="./img/disc_light.png" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +41,28 @@ export default defineComponent({
 </script>
 
 <style lang="less">
+.roll-wrap {
+  position: relative;
+  .needle {
+    content: ' ';
+    position: absolute;
+    top: -30%;
+    right: 30px;
+    z-index: 2;
+    background-size: contain;
+    width: 100px;
+    height: 160px;
+    transform-origin: 0% 0%;
+    transition: all 0.5s;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .rotate {
+    transform: rotate(-30deg);
+  }
+}
 .roll {
   width: 250px;
   height: 250px;
@@ -58,6 +85,7 @@ export default defineComponent({
     width: 250px;
     height: 250px;
   }
+
   .pic {
     border-radius: 50%;
     width: 200px;
