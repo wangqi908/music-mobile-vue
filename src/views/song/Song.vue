@@ -15,7 +15,7 @@
     <div class="body-box">
       <transition name="fade" mode="out-in">
         <div class="info" v-if="!isShowLrc" @click="showLrc">
-          <div class="name">{{ songInfo.name }}</div>
+          <Cover :info="songInfo" :isPlaying="isPlaying" />
         </div>
         <Lyric
           v-else
@@ -30,6 +30,7 @@
         v-if="isAudioLaded && audioDom"
         :audioDom="audioDom"
         @changeMediaCurrent="changeMediaCurrent"
+        @onTogglePlay="togglePlay"
       />
     </div>
   </div>
@@ -45,9 +46,10 @@ import Progress from '@/components/Progress/Progress.vue'
 import { useRoute } from 'vue-router'
 import useAsyncState from './hooks/useAsyncState'
 import SongRelate from './components/SongRelate/SongRelate.vue'
+import Cover from './components/Cover/Cover.vue'
 
 export default defineComponent({
-  components: { SongRelate, Lyric, Progress },
+  components: { SongRelate, Lyric, Progress, Cover },
   setup () {
     const route = useRoute()
     const state = reactive({
@@ -56,6 +58,7 @@ export default defineComponent({
       loading: false,
       isShowLrc: false,
       isAudioLaded: false,
+      isPlaying: true,
       src: '',
       lyric: '',
       bgStyle: {
@@ -66,6 +69,10 @@ export default defineComponent({
 
     function showLrc () {
       state.isShowLrc = true
+    }
+
+    function togglePlay (isPlaying: boolean) {
+      state.isPlaying = isPlaying
     }
 
     // 判断audioDom是否加载完毕
@@ -115,6 +122,7 @@ export default defineComponent({
       audioDom,
       showLrc,
       changeMediaCurrent,
+      togglePlay,
       ...toRefs(state)
     }
   }
@@ -155,8 +163,10 @@ export default defineComponent({
   height: 100%;
 }
 .info {
-  border: 1px solid #000;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #audio {
   display: none;

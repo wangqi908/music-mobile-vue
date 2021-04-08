@@ -38,8 +38,7 @@ export default defineComponent({
   position: relative;
   padding-top: 39%;
   overflow: hidden;
-  background: url(https://s3.music.126.net/mobile-new/img/hot_music_bg_2x.jpg?f01a252389c26bcf016816242eaa6aee=)
-    no-repeat;
+  background: url('./img/hot_music_bg_2x.jpg') no-repeat;
   background-size: contain;
 }
 .hot-icon {
@@ -48,8 +47,7 @@ export default defineComponent({
   left: 20px;
   width: 142px;
   height: 67px;
-  background: url(https://s3.music.126.net/mobile-new/img/index_icon_2x.png?5207a28c3767992ca4bb6d4887c74880=)
-    no-repeat;
+  background: url(./img/index_icon_2x.png) no-repeat;
   background-size: 166px 97px;
   background-position: -24px -30px;
 }

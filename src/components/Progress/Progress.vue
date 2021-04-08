@@ -15,13 +15,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, onMounted } from 'vue'
+import { defineComponent, ref, PropType, onMounted, watch } from 'vue'
 import { toFixedNum } from '@/utils'
 import { uesHandleDom } from './hooks/uesHandleDom'
 import { useHandlePlayer } from './hooks/useHandlePlayer'
 
 export default defineComponent({
-  emit: ['changeMediaCurrent'],
+  emit: ['changeMediaCurrent', 'onTogglePlay'],
   props: {
     audioDom: {
       type: Object as PropType<HTMLMediaElement>,
@@ -59,6 +59,10 @@ export default defineComponent({
           2
         )
       })
+    })
+
+    watch(isPlaying, () => {
+      emit('onTogglePlay', isPlaying.value)
     })
 
     return {
