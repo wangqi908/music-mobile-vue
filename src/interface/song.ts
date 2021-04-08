@@ -8,11 +8,17 @@ export interface SongList {
   song: SongItem;
   playCount?: number;
   creatorName?: string;
+  privilege: {
+    cp: number;
+  };
 }
 
 export interface SongItem {
   name: string;
   artists: { name: string }[];
+  privilege: {
+    cp: number;
+  };
 }
 
 export interface SongInfo {

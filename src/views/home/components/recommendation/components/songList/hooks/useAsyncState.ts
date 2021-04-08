@@ -23,11 +23,13 @@ export function useAsyncState (limit = 30) {
         const id = item.id
         const picUrl = item.picUrl
         const name = item.name
+        const copyright = item.song.privilege.cp !== 0 // 版权
         return {
           artistName,
           id,
           picUrl,
-          name
+          name,
+          copyright
         }
       })
       state.list = info

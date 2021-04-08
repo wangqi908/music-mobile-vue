@@ -45,13 +45,15 @@ function handleSimilarSongData (songs: SongItem[]) {
     const albumName = item.album.name
     const name = item.name
     const id = item.id
+    const copyright = item.privilege.cp !== 0 // 版权
     const artistName = artistNames.join('/')
     return {
       artistName,
       id,
       picUrl,
       albumName,
-      name
+      name,
+      copyright
     }
   })
   const info = {

@@ -19,9 +19,6 @@ export const getInfo = async (keywords: string, offset = 1, limit = 10) => {
   const list: Song[] = songs.map((item: Song) => {
     const artistNames = item.ar.map(artist => artist.name)
     const artistName = artistNames.join('/')
-    console.log({
-      item
-    })
     const id = item.id
     const name = item.name
     const albumName = item.al.name
@@ -36,7 +33,6 @@ export const getInfo = async (keywords: string, offset = 1, limit = 10) => {
     }
   })
 
-  console.log(songs)
   return {
     list,
     songCount

@@ -1,5 +1,9 @@
 <template>
-  <div class="song-item" @click="checkSong">
+  <div
+    class="song-item"
+    :class="[info.copyright ? '' : 'no-copyright']"
+    @click="checkSong"
+  >
     <div
       :class="['num', 'center', info.rank <= 3 ? 'hot' : '']"
       v-if="info.rank"
@@ -12,8 +16,6 @@
     <div class="content">
       <div class="song-name ellipsis-text">
         <span>{{ info.name }}</span>
-        ---
-        <span>{{ info.copyright }}</span>
       </div>
       <div class="artist-name ellipsis-text">
         <span>
@@ -32,6 +34,7 @@
 import { computed, defineComponent, PropType } from 'vue'
 import { useRouter } from 'vue-router'
 import { SongInfo } from '@/interface/song'
+import { Message } from '@/plugins'
 
 export default defineComponent({
   props: {
@@ -51,7 +54,12 @@ export default defineComponent({
   setup (props) {
     const router = useRouter()
     function checkSong () {
-      const id = props.info.id
+      const { info } = props
+      if (!info.copyright) {
+        Message('由于版权保护，您所在的地区暂时无法使用')
+        return
+      }
+      const id = info.id
       router.push({ params: { id }, name: 'Song' })
     }
 
@@ -105,6 +113,12 @@ export default defineComponent({
   img {
     width: 100%;
     height: 100%;
+  }
+}
+.no-copyright {
+  color: #ccc;
+  .artist-name {
+    color: #ccc;
   }
 }
 </style>

@@ -27,6 +27,7 @@ export interface SongItem {
   name: string;
   album: { name: string; picUrl: string };
   artists: { name: string }[];
+  privilege: { cp: number };
 }
 export interface SongList {
   artistName: string;
