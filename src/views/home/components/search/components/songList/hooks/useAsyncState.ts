@@ -17,12 +17,15 @@ export const getInfo = async (keywords: string, offset = 1, limit = 10) => {
   const songs = resData.songs || []
   const songCount = resData.songCount
   const list: Song[] = songs.map((item: Song) => {
-    const artistNames = item.artists.map(artist => artist.name)
+    const artistNames = item.ar.map(artist => artist.name)
     const artistName = artistNames.join('/')
+    console.log({
+      item
+    })
     const id = item.id
     const name = item.name
-    const albumName = item.album.name
-    const copyright = item.copyrightId !== 0
+    const albumName = item.al.name
+    const copyright = item.privilege.cp !== 0 // 版权
 
     return {
       artistName,
@@ -33,6 +36,7 @@ export const getInfo = async (keywords: string, offset = 1, limit = 10) => {
     }
   })
 
+  console.log(songs)
   return {
     list,
     songCount

@@ -7,6 +7,9 @@ export interface Song {
   name: string;
   id: number;
   copyrightId: number;
-  artists: { name: string }[];
-  album: { name: string };
+  ar: { name: string }[];
+  al: { name: string };
+  privilege: {
+    cp: number;
+  };
 }
