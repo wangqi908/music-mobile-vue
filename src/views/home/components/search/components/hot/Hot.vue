@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
-import { searchModule } from '@/store/actionTypes'
+import { searchModule } from '@/store/modules/search/types'
 
 export default defineComponent({
   setup () {

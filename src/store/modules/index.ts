@@ -1,1 +1,7 @@
-export { default as searchModule } from './search'
+import search from './search'
+
+const modules = {
+  searchModule: search
+}
+
+export default modules

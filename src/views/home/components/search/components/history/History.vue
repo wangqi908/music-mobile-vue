@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue'
 import { useStore } from '@/store'
-import { searchModule } from '@/store/actionTypes'
+import { searchModule } from '@/store/modules/search/types'
 import { getStorage, removeStorage } from '@/utils'
 // todo 点击item,要放在第一位
 export default defineComponent({

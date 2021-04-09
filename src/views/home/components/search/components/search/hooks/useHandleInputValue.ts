@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { store } from '@/store'
-import { searchModule } from '@/store/actionTypes'
+import { searchModule } from '@/store/modules/search/types'
 
 export default () => {
   const isInputtingZh = ref(false)

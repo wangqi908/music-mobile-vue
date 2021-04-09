@@ -1,18 +1,14 @@
 import { InjectionKey } from 'vue'
-import { createStore, useStore as baseUseStore, Store } from 'vuex'
-import { searchModule } from './modules/index'
-import { RootState, AllState } from './interface'
+import { createStore, Store, useStore as baseUseStore } from 'vuex'
+import modules from './modules'
+import { StateType } from './types'
 
-export const key: InjectionKey<Store<RootState>> = Symbol('vuex')
+export const key: InjectionKey<Store<StateType>> = Symbol('key')
 
-export const store = createStore<RootState>({
-  state: {},
-  modules: {
-    searchModule
-  }
+export const store: Store<StateType> = createStore({
+  modules
 })
 
-// define your own `useStore` composition function
-export function useStore<T = AllState> () {
-  return baseUseStore<T>(key)
+export function useStore (): Store<StateType> {
+  return baseUseStore(key)
 }

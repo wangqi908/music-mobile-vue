@@ -22,7 +22,7 @@
 import { defineComponent, computed, watch, reactive, toRefs } from 'vue'
 import { useStore } from '@/store'
 import { useAsyncState } from './hooks/useAsyncState'
-import { searchModule } from '@/store/actionTypes'
+import { searchModule } from '@/store/modules/search/types'
 import { State } from './hooks/interface'
 import { debounce } from '@/utils'
 
