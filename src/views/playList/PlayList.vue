@@ -53,6 +53,7 @@ export default defineComponent({
       state.coverImg = coverImgUrl
       state.nickname = creator.nickname
       state.avatarImg = creator.avatarUrl
+      document.title = `${state.name}--🎸云音乐`
     }
 
     return {

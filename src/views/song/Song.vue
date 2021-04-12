@@ -19,8 +19,8 @@
           <div class="info" v-if="!isShowLrc" @click="showLrc">
             <Cover :info="songInfo" :isPlaying="isPlaying" />
             <div class="meta">
-              <p>{{ songInfo.artistName }}</p>
               <p>{{ songInfo.name }}</p>
+              <p>{{ songInfo.artistName }}</p>
             </div>
           </div>
           <Lyric
@@ -112,6 +112,7 @@ export default defineComponent({
         state.bgStyle.backgroundImage = `url(${songInfo.picUrl}?imageView&thumbnail=50y50&quality=15&tostatic=0) `
         state.src = src
         state.lyric = lyric
+        document.title = `${songInfo.name}--${songInfo.artistName}--🎸云音乐`
       } catch (error) {
         state.loading = false
         console.log(error)

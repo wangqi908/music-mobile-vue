@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRaw, reactive, toRefs } from 'vue'
+import { defineComponent, toRaw, reactive, toRefs, onMounted } from 'vue'
 import { Tab, Recommendation, Hot, Search } from './components'
 
 export default defineComponent({
@@ -34,6 +34,10 @@ export default defineComponent({
     function navIdChange (id: number) {
       state.navId = id
     }
+
+    onMounted(() => {
+      document.title = '🎸云音乐'
+    })
 
     return {
       componentList,
