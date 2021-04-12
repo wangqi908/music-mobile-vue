@@ -10,6 +10,7 @@
         controls
         preload
         autoplay
+        muted
         :src="src"
         ref="audioDom"
       ></audio>
@@ -17,6 +18,10 @@
         <transition name="fade" mode="out-in">
           <div class="info" v-if="!isShowLrc" @click="showLrc">
             <Cover :info="songInfo" :isPlaying="isPlaying" />
+            <div class="meta">
+              <p>{{ songInfo.artistName }}</p>
+              <p>{{ songInfo.name }}</p>
+            </div>
           </div>
           <Lyric
             v-else
@@ -82,6 +87,11 @@ export default defineComponent({
       if (audioDom.value !== null) {
         audioDom.value.addEventListener('loadedmetadata', () => {
           state.isAudioLaded = true
+          if (audioDom.value) {
+            // 刷新页面自动播放
+            audioDom.value.muted = false
+            audioDom.value.play()
+          }
         })
       }
     }
@@ -167,16 +177,34 @@ export default defineComponent({
 .info {
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  .meta {
+    text-align: center;
+    margin-top: 30px;
+    p {
+      &:first-child {
+        color: rgb(206, 206, 206);
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      &:last-child {
+        color: rgb(192, 192, 192);
+        font-size: 10px;
+      }
+    }
+  }
 }
+
 #audio {
   display: none;
 }
 .body-box {
   height: 80%;
   padding-bottom: 10px;
+  padding: 40px 0;
 }
 .progress-box {
   height: 20%;
