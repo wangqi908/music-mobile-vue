@@ -1,6 +1,9 @@
 # music-vue
 
-## [在线演示](http://wangqi908.github.io/music-mobile-vue)
+### 手机扫码演示
+
+![](https://z3.ax1x.com/2021/04/12/cD9fbT.png)
+
 
 ## Project setup
 ```
