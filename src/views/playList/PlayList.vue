@@ -1,26 +1,28 @@
 <template>
-  <section class="head" v-if="!loading">
-    <div
-      class="bg-img"
-      :style="{
-        'background-image': `url(${coverImg}?imageView=1&type=webp&thumbnail=252x0)`
-      }"
-    ></div>
-    <div class="content">
-      <div class="left">
-        <img :src="coverImg" alt="" srcset="" class="cover-img" />
-      </div>
-      <div class="right">
-        <div class="name ellipsis-text-line-2">{{ name }}</div>
-        <div class="avatar">
-          <img :src="avatarImg" alt="" class="avatar-img" />
-          <div class="avatar-name ellipsis-text">{{ nickname }}</div>
+  <div>
+    <section class="head" v-if="!loading">
+      <div
+        class="bg-img"
+        :style="{
+          'background-image': `url(${coverImg}`
+        }"
+      ></div>
+      <div class="content">
+        <div class="left">
+          <img :src="coverImg" alt="" srcset="" class="cover-img" />
+        </div>
+        <div class="right">
+          <div class="name ellipsis-text-line-2">{{ name }}</div>
+          <div class="avatar">
+            <img :src="avatarImg" alt="" class="avatar-img" />
+            <div class="avatar-name ellipsis-text">{{ nickname }}</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <Loading v-else />
-  <SongList :id="id" @getInfo="getInfo" />
+    </section>
+    <Loading v-else />
+    <SongList :id="id" @getInfo="getInfo" />
+  </div>
 </template>
 
 <script lang="ts">

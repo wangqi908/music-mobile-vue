@@ -1,11 +1,15 @@
 <template>
-  <div class="nav-wrap">
-    <Tab @navIdChange="navIdChange" />
-  </div>
-  <div class="content">
-    <keep-alive>
-      <component :is="componentList[navId]"></component>
-    </keep-alive>
+  <div>
+    <div class="nav-wrap">
+      <Tab @navIdChange="navIdChange" />
+    </div>
+    <div class="content">
+      <transition name="fade" mode="out-in">
+        <keep-alive>
+          <component :is="componentList[navId]"></component>
+        </keep-alive>
+      </transition>
+    </div>
   </div>
 </template>
 

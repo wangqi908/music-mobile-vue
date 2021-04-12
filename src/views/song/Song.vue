@@ -1,42 +1,44 @@
 <template>
-  <div class="background" :style="bgStyle">
-    <div class="shade"></div>
-  </div>
+  <div>
+    <div class="background" :style="bgStyle">
+      <div class="shade"></div>
+    </div>
 
-  <div class="song-content" v-if="!loading">
-    <audio
-      id="audio"
-      controls
-      preload
-      autoplay
-      :src="src"
-      ref="audioDom"
-    ></audio>
-    <div class="body-box">
-      <transition name="fade" mode="out-in">
-        <div class="info" v-if="!isShowLrc" @click="showLrc">
-          <Cover :info="songInfo" :isPlaying="isPlaying" />
-        </div>
-        <Lyric
-          v-else
-          v-model:isShowLrc="isShowLrc"
+    <div class="song-content" v-if="!loading">
+      <audio
+        id="audio"
+        controls
+        preload
+        autoplay
+        :src="src"
+        ref="audioDom"
+      ></audio>
+      <div class="body-box">
+        <transition name="fade" mode="out-in">
+          <div class="info" v-if="!isShowLrc" @click="showLrc">
+            <Cover :info="songInfo" :isPlaying="isPlaying" />
+          </div>
+          <Lyric
+            v-else
+            v-model:isShowLrc="isShowLrc"
+            :audioDom="audioDom"
+            :lyric="lyric"
+          />
+        </transition>
+      </div>
+      <div class="progress-box">
+        <Progress
+          v-if="isAudioLaded && audioDom"
           :audioDom="audioDom"
-          :lyric="lyric"
+          @changeMediaCurrent="changeMediaCurrent"
+          @onTogglePlay="togglePlay"
         />
-      </transition>
+      </div>
     </div>
-    <div class="progress-box">
-      <Progress
-        v-if="isAudioLaded && audioDom"
-        :audioDom="audioDom"
-        @changeMediaCurrent="changeMediaCurrent"
-        @onTogglePlay="togglePlay"
-      />
-    </div>
-  </div>
 
-  <Loading isFullScreen v-else />
-  <SongRelate :id="id" />
+    <Loading isFullScreen v-else />
+    <SongRelate :id="id" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -167,6 +169,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 #audio {
   display: none;

@@ -21,7 +21,7 @@ import { uesHandleDom } from './hooks/uesHandleDom'
 import { useHandlePlayer } from './hooks/useHandlePlayer'
 
 export default defineComponent({
-  emit: ['changeMediaCurrent', 'onTogglePlay'],
+  emits: ['changeMediaCurrent', 'onTogglePlay'],
   props: {
     audioDom: {
       type: Object as PropType<HTMLMediaElement>,

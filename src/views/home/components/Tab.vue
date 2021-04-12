@@ -17,6 +17,7 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 
 export default defineComponent({
+  emits: ['navIdChange'],
   setup (props, { emit }) {
     const state = reactive({
       list: [

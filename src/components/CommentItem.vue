@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import { CommentListInterface } from '@/interface/comment'
 
 export default defineComponent({
@@ -43,8 +43,7 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const avatarUrl =
-      props.info.avatarUrl + '?imageView=1&type=webp&thumbnail=60x0'
+    const avatarUrl = computed(() => props.info.avatarUrl)
     return {
       avatarUrl
     }

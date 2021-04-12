@@ -64,7 +64,7 @@ export default defineComponent({
     }
 
     const pic = computed(() => {
-      return props.info.picUrl + '?imageView=1&type=webp&thumbnail=252x0'
+      return props.info.picUrl
     })
 
     return {

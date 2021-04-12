@@ -1,12 +1,14 @@
 <template>
-  <div class="tip margin-top">推荐歌单</div>
-  <MySuspense>
-    <PlayList />
-  </MySuspense>
-  <div class="tip">最新音乐</div>
-  <MySuspense>
-    <SongList />
-  </MySuspense>
+  <div>
+    <div class="tip margin-top">推荐歌单</div>
+    <MySuspense>
+      <PlayList />
+    </MySuspense>
+    <div class="tip">最新音乐</div>
+    <MySuspense>
+      <SongList />
+    </MySuspense>
+  </div>
 </template>
 
 <script lang="ts">
