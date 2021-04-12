@@ -17,5 +17,11 @@ module.exports = {
         additionalData: '@import "~@/assets/style/variables.less";'
       }
     }
+  },
+  chainWebpack: config => {
+    config.plugin('html').tap(args => {
+      args[0].title = '云音乐'
+      return args
+    })
   }
 }
