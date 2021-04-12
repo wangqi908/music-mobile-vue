@@ -1,46 +1,47 @@
 <template>
-  <div class="bg" :style="bgStyle"></div>
-  <div class="song">
-    <div class="song-content" v-if="!loading">
-      <audio
-        id="audio"
-        controls
-        preload
-        autoplay
-        muted
-        :src="src"
-        ref="audioDom"
-      ></audio>
-      <div class="body-box">
-        <transition name="fade" mode="out-in">
-          <div class="info" v-if="!isShowLrc" @click="showLrc">
-            <Cover :info="songInfo" :isPlaying="isPlaying" />
-            <div class="meta">
-              <p>{{ songInfo.name }}</p>
-              <p>{{ songInfo.artistName }}</p>
+  <div>
+    <div class="bg" :style="bgStyle"></div>
+    <div class="song">
+      <div class="song-content" v-if="!loading">
+        <audio
+          id="audio"
+          controls
+          preload
+          autoplay
+          :src="src"
+          ref="audioDom"
+        ></audio>
+        <div class="body-box">
+          <transition name="fade" mode="out-in">
+            <div class="info" v-if="!isShowLrc" @click="showLrc">
+              <Cover :info="songInfo" :isPlaying="isPlaying" />
+              <div class="meta">
+                <p>{{ songInfo.name }}</p>
+                <p>{{ songInfo.artistName }}</p>
+              </div>
             </div>
-          </div>
-          <div class="lyric-wrap" v-else>
-            <Lyric
-              v-model:isShowLrc="isShowLrc"
-              :audioDom="audioDom"
-              :lyric="lyric"
-            />
-          </div>
-        </transition>
+            <div class="lyric-wrap" v-else>
+              <Lyric
+                v-model:isShowLrc="isShowLrc"
+                :audioDom="audioDom"
+                :lyric="lyric"
+              />
+            </div>
+          </transition>
+        </div>
+        <div class="progress-box">
+          <Progress
+            v-if="isAudioLaded && audioDom"
+            :audioDom="audioDom"
+            @changeMediaCurrent="changeMediaCurrent"
+            @onTogglePlay="togglePlay"
+          />
+        </div>
       </div>
-      <div class="progress-box">
-        <Progress
-          v-if="isAudioLaded && audioDom"
-          :audioDom="audioDom"
-          @changeMediaCurrent="changeMediaCurrent"
-          @onTogglePlay="togglePlay"
-        />
-      </div>
-    </div>
 
-    <Loading isFullScreen v-else />
-    <SongRelate :id="id" />
+      <Loading isFullScreen v-else />
+      <SongRelate :id="id" />
+    </div>
   </div>
 </template>
 
@@ -85,11 +86,11 @@ export default defineComponent({
       if (audioDom.value !== null) {
         audioDom.value.addEventListener('loadedmetadata', () => {
           state.isAudioLaded = true
-          if (audioDom.value) {
-            // 刷新页面自动播放
-            audioDom.value.muted = false
-            audioDom.value.play()
-          }
+          // if (audioDom.value) {
+          //   // 刷新页面自动播放
+          //   audioDom.value.muted = false
+          //   audioDom.value.play()
+          // }
         })
       }
     }
@@ -164,9 +165,6 @@ export default defineComponent({
     z-index: 2;
     transform: scale(1.2);
   }
-}
-.song {
-  color: hsla(0, 0%, 100%, 0.9);
 }
 
 .song-content {

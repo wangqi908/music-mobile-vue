@@ -101,6 +101,20 @@ export default defineComponent({
       props.toggleDistance,
       backgroundOpacity
     )
+
+    // 阻止浏览器下拉刷新
+    watch(
+      () => state.isDragging,
+      val => {
+        if (val) {
+          document.getElementsByTagName('body')[0].className =
+            'stop-pull-refresh'
+        } else {
+          document.getElementsByTagName('body')[0].removeAttribute('class')
+        }
+      }
+    )
+
     return {
       ...toRefs(state),
       popup,

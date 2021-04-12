@@ -103,6 +103,7 @@ export default defineComponent({
 
     onMounted(() => {
       getInfoAsync()
+      // todo 禁止下拉刷新
     })
 
     watch(
