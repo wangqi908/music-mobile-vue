@@ -43,16 +43,17 @@ export default defineComponent({
 <style lang="less">
 .roll-wrap {
   position: relative;
+  padding-top: 60px;
   .needle {
     content: ' ';
     position: absolute;
-    top: -30%;
+    top: 0%;
     right: 30px;
     z-index: 2;
     background-size: contain;
     width: 100px;
     height: 160px;
-    transform-origin: 0% 0%;
+    transform-origin: 15px 15px;
     transition: all 0.5s;
     img {
       width: 100%;

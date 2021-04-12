@@ -89,6 +89,7 @@ export default defineComponent({
 .wrapper {
   overflow: hidden;
   height: 100%;
+  z-index: 10;
   .content {
     .lyric-item {
       transition: all 1s;
@@ -98,7 +99,7 @@ export default defineComponent({
       padding: 10px;
     }
     .active {
-      color: rgb(255, 255, 255);
+      color: hsla(0, 0%, 100%, 0.9);
     }
   }
 

@@ -1,6 +1,9 @@
 <template>
-  <div class="bg" :style="bgStyle"></div>
-  <div class="song">
+  <div>
+    <div class="background" :style="bgStyle">
+      <div class="shade"></div>
+    </div>
+
     <div class="song-content" v-if="!loading">
       <audio
         id="audio"
@@ -20,13 +23,12 @@
               <p>{{ songInfo.artistName }}</p>
             </div>
           </div>
-          <div class="lyric-wrap" v-else>
-            <Lyric
-              v-model:isShowLrc="isShowLrc"
-              :audioDom="audioDom"
-              :lyric="lyric"
-            />
-          </div>
+          <Lyric
+            v-else
+            v-model:isShowLrc="isShowLrc"
+            :audioDom="audioDom"
+            :lyric="lyric"
+          />
         </transition>
       </div>
       <div class="progress-box">
@@ -107,7 +109,7 @@ export default defineComponent({
         const { songInfo, src, lyric } = await useAsyncState(state.id)
         state.loading = false
         state.songInfo = songInfo
-        state.bgStyle.backgroundImage = `url(${songInfo.picUrl}?imageView&thumbnail=650y650&quality=15&tostatic=0) `
+        state.bgStyle.backgroundImage = `url(${songInfo.picUrl}?imageView&thumbnail=50y50&quality=15&tostatic=0) `
         state.src = src
         state.lyric = lyric
         document.title = `${songInfo.name}--${songInfo.artistName}--🎸云音乐`
@@ -141,39 +143,37 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
-.bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-size: cover;
+.background {
+  opacity: 1;
+  transform: scale(1.5);
+  filter: blur(170px);
+  background-color: #161824;
   background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  transform-origin: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
   overflow: hidden;
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    background: rgb(22, 22, 22);
-    opacity: 0.9;
-    z-index: 2;
-    transform: scale(1.2);
-  }
+  z-index: 1;
 }
-.song {
-  color: hsla(0, 0%, 100%, 0.9);
+.shade {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), #000);
 }
-
 .song-content {
+  position: absolute;
   z-index: 10;
   width: 100%;
   height: 100%;
-  padding-top: 20px;
 }
 .info {
   height: 100%;
@@ -187,32 +187,28 @@ export default defineComponent({
     margin-top: 30px;
     p {
       &:first-child {
-        color: hsla(0, 0%, 100%, 0.9);
+        color: rgb(206, 206, 206);
         margin-bottom: 10px;
         font-size: 14px;
       }
       &:last-child {
-        color: hsla(0, 0%, 100%, 0.6);
+        color: rgb(192, 192, 192);
         font-size: 10px;
       }
     }
   }
 }
 
-.lyric-wrap {
-  width: 100%;
-  height: 70vh;
-}
 #audio {
   display: none;
 }
 .body-box {
+  height: 80%;
   padding-bottom: 10px;
+  padding: 40px 0;
 }
 .progress-box {
-  position: absolute;
-  bottom: 80px;
-  width: 100%;
+  height: 20%;
   padding: 0 20px;
 }
 </style>

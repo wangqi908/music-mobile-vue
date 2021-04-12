@@ -119,7 +119,6 @@ export default defineComponent({
         margin-right: 5px;
       }
       .avatar-name {
-        color: hsla(0, 0%, 100%, 0.7);
       }
     }
   }

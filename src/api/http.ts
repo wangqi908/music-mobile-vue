@@ -1,6 +1,8 @@
 import axios from 'axios'
 const instance = axios.create({
-  baseURL: process.env.VUE_APP_BASE_URL,
+  // baseURL: 'http://localhost:3000',
+  baseURL: 'https://music-wangqi908.vercel.app',
+  // baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 10000
 })
 
