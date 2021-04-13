@@ -1,8 +1,10 @@
 # music-vue
 
+### [体验地址](https://www.milky-way.top/music-mobile-vue/)
+
 ### 手机扫码演示
 
-![](https://z3.ax1x.com/2021/04/12/cD9fbT.png)
+![](https://i.loli.net/2021/04/13/MS1wrnj5JilQcdu.png)
 
 
 ## Project setup
