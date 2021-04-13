@@ -40,8 +40,7 @@ import {
   reactive,
   toRefs,
   ref,
-  computed,
-  watch
+  computed
 } from 'vue'
 import { Popup, SimilarPlaylist, SimilarSong, Comment } from './components'
 import uesHandleCardMove from './hooks/uesHandleCardMove'
@@ -103,15 +102,7 @@ export default defineComponent({
 
     onMounted(() => {
       getInfoAsync()
-      // todo 禁止下拉刷新
     })
-
-    watch(
-      () => props.id,
-      () => {
-        getInfoAsync()
-      }
-    )
 
     return {
       ...toRefs(state),

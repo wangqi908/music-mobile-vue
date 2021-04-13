@@ -126,7 +126,9 @@ export default defineComponent({
     watch(
       () => route.params.id,
       val => {
-        state.id = val as string
+        if (val) {
+          state.id = val as string
+        }
       }
     )
 

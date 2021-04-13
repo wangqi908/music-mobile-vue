@@ -1,7 +1,7 @@
 import axios from 'axios'
 const instance = axios.create({
-  // baseURL: 'http://localhost:3000',
-  baseURL: 'https://musicapi.adicw.cn',
+  baseURL: 'http://localhost:3000',
+  // baseURL: 'https://musicapi.adicw.cn',
   // baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 10000
 })
