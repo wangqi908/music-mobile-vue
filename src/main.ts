@@ -7,6 +7,7 @@ import './assets/style/transition.less'
 import './assets/iconfont/iconfont.css'
 import { addGlobalComponents } from '@/components'
 import { addGlobalFilters } from '@/filters'
+import { addGlobalDirectives } from '@/directives'
 import { handleImgErr } from '@/utils/handleErr'
 
 const app = createApp(App)
@@ -16,5 +17,6 @@ app
   .mount('#app')
 addGlobalComponents(app)
 addGlobalFilters(app)
+addGlobalDirectives(app)
 
 handleImgErr()
