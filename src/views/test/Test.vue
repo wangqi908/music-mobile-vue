@@ -1,42 +1,21 @@
 <template>
   <div>
-    {{ isModalVisible }}
-    <button @click="show">show</button>
-    <button @click="show1">show1</button>
-    <button @click="show2">show2</button>
+    <audio
+      controls
+      preload
+      autoplay
+      src="https://music.163.com/song/media/outer/url?id=77470.mp3"
+      ref="audioDom"
+    ></audio>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { Message } from '@/plugins'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   setup () {
-    const isModalVisible = ref(true)
-    function show () {
-      isModalVisible.value = !isModalVisible.value
-      Message('由于版权保护，您所在的地区暂时无法使用')
-    }
-    function show1 () {
-      isModalVisible.value = !isModalVisible.value
-      Message({
-        message: 'haode',
-        btnValue: 'ok'
-      })
-    }
-    function show2 () {
-      isModalVisible.value = !isModalVisible.value
-      Message('show2')
-    }
-
-    return {
-      isModalVisible,
-      close,
-      show1,
-      show2,
-      show
-    }
+    return {}
   }
 })
 </script>

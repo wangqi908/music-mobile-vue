@@ -11,6 +11,7 @@
           :src="src"
           ref="audioDom"
         ></audio>
+
         <div class="body-box">
           <transition name="fade" mode="out-in">
             <div class="info" v-if="!isShowLrc" @click="showLrc">
@@ -53,6 +54,7 @@ import { useRoute } from 'vue-router'
 import useAsyncState from './hooks/useAsyncState'
 import SongRelate from './components/SongRelate/SongRelate.vue'
 import Cover from './components/Cover/Cover.vue'
+import { songSrc } from '@/api'
 
 export default defineComponent({
   components: { SongRelate, Lyric, Progress, Cover },
@@ -65,7 +67,7 @@ export default defineComponent({
       isShowLrc: false,
       isAudioLaded: false,
       isPlaying: true,
-      src: '',
+      src: songSrc(Number(route.params.id)),
       lyric: '',
       bgStyle: {
         backgroundImage: ''
@@ -86,11 +88,6 @@ export default defineComponent({
       if (audioDom.value !== null) {
         audioDom.value.addEventListener('loadedmetadata', () => {
           state.isAudioLaded = true
-          // if (audioDom.value) {
-          //   // 刷新页面自动播放
-          //   audioDom.value.muted = false
-          //   audioDom.value.play()
-          // }
         })
       }
     }
@@ -105,11 +102,10 @@ export default defineComponent({
     async function getInfo () {
       state.loading = true
       try {
-        const { songInfo, src, lyric } = await useAsyncState(state.id)
+        const { songInfo, lyric } = await useAsyncState(state.id)
         state.loading = false
         state.songInfo = songInfo
         state.bgStyle.backgroundImage = `url(${songInfo.picUrl}?imageView&thumbnail=650y650&quality=15&tostatic=0) `
-        state.src = src
         state.lyric = lyric
         document.title = `${songInfo.name}--${songInfo.artistName}--🎸云音乐`
       } catch (error) {

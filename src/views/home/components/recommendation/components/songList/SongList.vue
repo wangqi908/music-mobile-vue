@@ -13,7 +13,7 @@ import { SongItem } from '@/components'
 export default defineComponent({
   components: { SongItem },
   setup () {
-    const { list, loading } = useAsyncState(10)
+    const { list, loading } = useAsyncState()
 
     return {
       loading,

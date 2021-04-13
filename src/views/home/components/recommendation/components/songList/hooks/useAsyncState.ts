@@ -6,7 +6,7 @@ interface State {
   list?: SongInfo[] | null;
 }
 
-export function useAsyncState (limit = 30) {
+export function useAsyncState () {
   const state: State = reactive({
     list: null,
     loading: false
@@ -15,7 +15,7 @@ export function useAsyncState (limit = 30) {
   const run = async () => {
     state.loading = true
     try {
-      const res = await personalizedNewSongReq({ limit })
+      const res = await personalizedNewSongReq({})
       const resData: SongList[] = res.data.result
       const info = resData.map(item => {
         const artistNames = item.song.artists.map(artist => artist.name)

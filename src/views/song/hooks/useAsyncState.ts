@@ -1,4 +1,4 @@
-import { songDetailReq, songUrlReq, lyricReq } from '@/api'
+import { songDetailReq, lyricReq } from '@/api'
 import { SongInfo } from '@/interface/song'
 
 interface SongDetail {
@@ -25,10 +25,7 @@ export default async (id: string) => {
     }
   })[0]
 
-  const songUrlRes = await songUrlReq({ id: Number(id) })
-  const src: string = songUrlRes.data.data[0].url
-
   const lyricRes = await lyricReq({ id: Number(id) })
   const lyric: string = lyricRes.data.lrc?.lyric || ''
-  return { songInfo, src, lyric }
+  return { songInfo, lyric }
 }

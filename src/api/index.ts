@@ -83,6 +83,8 @@ export const searchSuggestReq = (params: { keywords: string; type?: string }) =>
  */
 export const songUrlReq = (params: { id: number; br?: number }) =>
   req('/song/url', params, 'GET')
+export const songSrc = (id: number) =>
+  `https://music.163.com/song/media/outer/url?id=${id}.mp3`
 
 /**
  * 音乐歌词
