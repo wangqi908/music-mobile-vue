@@ -1,8 +1,7 @@
 import axios from 'axios'
 const instance = axios.create({
-  // baseURL: 'https://music-wangqi908.vercel.app',
-  baseURL: 'http://localhost:3000',
-  // baseURL: 'https://musicapi.adicw.cn',
+  baseURL: 'https://music-wangqi908.vercel.app',
+  // baseURL: 'http://localhost:3000',
   // baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 10000
 })

@@ -1,7 +1,8 @@
 <template>
   <div @click="checkList(info.id)" class="item">
     <div class="img-box">
-      <img :src="info.coverImgUrl" :alt="info.name" class="img" />
+      <!-- <img :src="info.coverImgUrl" :alt="info.name" class="img" /> -->
+      <img v-lazy="info.coverImgUrl" :alt="info.name" class="img" />
     </div>
     <p
       :class="[

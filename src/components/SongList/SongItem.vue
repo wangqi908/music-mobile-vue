@@ -11,7 +11,8 @@
       {{ info.rank }}
     </div>
     <div class="pic" v-if="showPic">
-      <img :src="pic" alt="" class="" />
+      <!-- <img :src="pic" alt="" class="" /> -->
+      <img v-lazy="pic" alt="" class="" />
     </div>
     <div class="content">
       <div class="song-name ellipsis-text">

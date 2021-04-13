@@ -13,6 +13,7 @@ export const addGlobalDirectives = (app: App) => {
           }
         })
       }
+      // https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver
       const observer = new IntersectionObserver(callback)
       observer.observe(el)
     }

@@ -1,7 +1,7 @@
 <template>
   <div class="comment-box">
     <div class="avatar">
-      <img :src="avatarUrl" class="avatar-img" />
+      <img v-lazy="avatarUrl" class="avatar-img" />
     </div>
     <div class="content">
       <div class="content-head">
