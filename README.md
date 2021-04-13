@@ -4,7 +4,7 @@
 
 ### 手机扫码演示
 
-![](https://i.loli.net/2021/04/13/MS1wrnj5JilQcdu.png)
+![](https://i.loli.net/2021/04/13/1IXAOhdYyNW9CTZ.png)
 
 
 ## Project setup
